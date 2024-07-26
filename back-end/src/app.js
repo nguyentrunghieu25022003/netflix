@@ -17,13 +17,11 @@ const database = require("../config/connect");
 const router = require("./api/v1/routes/index.route");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
-
 database.connect();
 
-// Middleware setup
 app.use(morgan("dev"));
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.CLIENT_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "my-custom-header", "Content-Type"],

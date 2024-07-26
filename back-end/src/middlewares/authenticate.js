@@ -9,7 +9,7 @@ const authenticateToken = async (req, res, next) => {
     return res.sendStatus(401);
   }
   console.log("Cookies:", req.cookies);
-  console.log("Session:", req.session);
+  console.log("Session:", req.session.token);
   const blacklistedToken = await Blacklisting.findOne({ token: token });
   if (blacklistedToken) {
     return res.status(403).json({ error: "Token is invalid" });
@@ -19,6 +19,7 @@ const authenticateToken = async (req, res, next) => {
     if (err) {
       return res.status(403).json({ error: err.message });
     }
+    console.log("Session token:", req.session.token);
     req.user = user;
     next();
   });  

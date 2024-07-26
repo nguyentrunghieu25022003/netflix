@@ -16,6 +16,7 @@ const Login = () => {
     password: "",
     status: false
   });
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,18 +28,20 @@ const Login = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/users/auth/login`,
         userForm,
+        {
+          withCredentials: true
+        }
       );
-      if(response.status !== 200) {
+      if(response.status === 200) {
+        const token = Cookies.get("token");
+        console.log(token);
+        window.location.href ="/";
+      } else {
         setUserData((prev) => ({
           ...prev,
           status: true
         }));
-        return;
       }
-      Cookies.set("token", response.data.accessToken, { expires: 1/12 });
-      Cookies.set("avatar", response.data.avatarUrl, { expires: 1/12 });
-      Cookies.set("email", userData.email, { expires: 1/12 });
-      window.location.href ="/";
     } catch (error) {
       setUserData((prev) => ({
         ...prev,

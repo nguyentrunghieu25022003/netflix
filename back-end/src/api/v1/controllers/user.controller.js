@@ -126,6 +126,7 @@ module.exports.userLogin = async (req, res) => {
     }
     const token = createToken(user._id);
     req.session.token = token;
+    console.log("Token login", req.session.token);
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 15 * 60 * 1000),
@@ -144,7 +145,7 @@ module.exports.userLogin = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
-    res.json({ accessToken: token, avatarUrl: user.avatar });
+    res.json({ message: "Success!" });
   } catch (error) {
     res.status(500).json({ message: "Error login user", error });
   }
