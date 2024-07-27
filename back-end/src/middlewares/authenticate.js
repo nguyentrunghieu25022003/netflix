@@ -8,8 +8,7 @@ const authenticateToken = async (req, res, next) => {
     console.error("Token not found in the authorization header");
     return res.sendStatus(401);
   }
-  console.log("Cookies:", req.cookies);
-  console.log("Session:", req.session.token);
+  console.log("Cookies:", req.cookies.token);
   const blacklistedToken = await Blacklisting.findOne({ token: token });
   if (blacklistedToken) {
     return res.status(403).json({ error: "Token is invalid" });

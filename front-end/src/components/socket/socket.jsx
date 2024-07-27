@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import Cookies from "js-cookie";
 import { fetchAllNotifications } from "../../api/index";
 
-const SOCKET_URL = "http://localhost:3000";
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 const NotificationContext = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -18,6 +18,7 @@ export const NotificationProvider = ({ children }) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
   useEffect(() => {
     const socket = io(SOCKET_URL);
 
@@ -27,8 +28,12 @@ export const NotificationProvider = ({ children }) => {
 
     socket.on("movieAdded", async (data) => {
       console.log(data.message);
-      const response = await fetchAllNotifications(options);
-      setNotifications(response.messages);
+      try {
+        const response = await fetchAllNotifications(options);
+        setNotifications(response.messages);
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
     });
 
     const fetchNotifications = async () => {
@@ -39,13 +44,14 @@ export const NotificationProvider = ({ children }) => {
         console.error("Failed to fetch notifications:", error);
       }
     };
+
     fetchNotifications();
 
     return () => {
       socket.disconnect();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   return (
     <NotificationContext.Provider value={{ notifications, setNotifications }}>

@@ -96,6 +96,7 @@ module.exports.searchFilms = async (req, res) => {
 
 module.exports.getAllMovies = async (req, res) => {
   try {
+    console.log(req);
     const find = {};
     let initPagination = {
       currentPage: req.query.page ? parseInt(req.query.page) : 1,
@@ -573,9 +574,10 @@ module.exports.getMovieDetailsWithComments = async (req, res) => {
 
 module.exports.getNotifications = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    /* const userId = req.user.userId;
     const notifications = await Notification.findOne({ userId: userId });
-    res.json(notifications);
+    res.json(notifications); */
+    res.json({ message: "Ok 1"});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error fetching from the database." });
@@ -584,7 +586,7 @@ module.exports.getNotifications = async (req, res) => {
 
 module.exports.handleNotifications = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    /* const userId = req.user.userId;
     const { notifySlug } = req.body;
     const notifications = await Notification.findOne({ userId: userId });
     if (notifications && notifications.messages) {
@@ -594,7 +596,7 @@ module.exports.handleNotifications = async (req, res) => {
         }
       });
       await notifications.save();
-    }
+    } */
     res.json({ message: "Success !" });
   } catch (err) {
     console.error(err);

@@ -20,6 +20,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Form submitted");
     try {
       const userForm = {
         email: userData.email,
@@ -33,9 +34,7 @@ const Login = () => {
         }
       );
       if(response.status === 200) {
-        const token = Cookies.get("token");
-        console.log(token);
-        window.location.href ="/";
+        window.location.href = "/";
       } else {
         setUserData((prev) => ({
           ...prev,

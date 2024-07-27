@@ -24,7 +24,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Authorization", "my-custom-header", "Content-Type"],
+  allowedHeaders: ["Authorization", "Content-Type"],
 }));
 app.options("*", cors());
 app.use(express.urlencoded({ extended: false }));

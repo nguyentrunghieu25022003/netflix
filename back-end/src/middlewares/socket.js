@@ -1,12 +1,13 @@
 const socket = require("socket.io");
+const jwt = require("jsonwebtoken");
 
 const initSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["my-custom-header"],
-      credentials: true
+      origin: process.env.CLIENT_URL,
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Authorization", "Content-Type"],
     }
   });
   
