@@ -2,7 +2,6 @@ import classNames from "classnames/bind";
 import styles from "./profile.module.scss";
 import { getMyProfile } from "../../api";
 import { useEffect, useRef, useState } from "react";
-import Cookies from "js-cookie";
 import axios from "axios";
 import Loading from "../../components/loading/loading";
 
@@ -12,14 +11,14 @@ const Profile = () => {
     const [profile, setProfile] = useState({});
     const nameInputRef = useRef(null);
     const emailInputRef = useRef(null);
-    const token = Cookies.get("token");
     const options = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true
     };
     const [isLoading, setIsLoading] = useState(true);
-    const email = Cookies.get("email");
+    const userFromStorage = localStorage.getItem("user");
+    const userObject = JSON.parse(userFromStorage);
+    const avatarUrl = userObject?.avatar;
+    const email = userObject?.email;
     const [state, setState] = useState({
         name: "",
         email: email,
@@ -81,7 +80,7 @@ const Profile = () => {
                 <div className="row">
                     <div className={cx("col-4 profile-custom")}>
                         <div className={cx("profile-img")}>
-                            <img src={`${import.meta.env.VITE_IMG_URL}${profile.avatar}`} alt="avatar" onError={handleImgError} />
+                            <img src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`} alt="avatar" onError={handleImgError} />
                         </div>
                         <div className={cx("profile-inf")}>
                             <span className={cx("profile-text")}>

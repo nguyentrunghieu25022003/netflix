@@ -4,7 +4,8 @@ import styles from "./sign-in.module.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
 
@@ -14,13 +15,11 @@ const Login = () => {
     moreActive: false,
     email: "",
     password: "",
-    status: false
+    status: false,
   });
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted");
     try {
       const userForm = {
         email: userData.email,
@@ -30,21 +29,35 @@ const Login = () => {
         `${import.meta.env.VITE_API_URL}/users/auth/login`,
         userForm,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
-      if(response.status === 200) {
-        window.location.href = "/";
+      if (response.status === 200) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        toast(<strong className="fs-3">Login successful!</strong> , {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
       } else {
         setUserData((prev) => ({
           ...prev,
-          status: true
+          status: true,
         }));
+        return;
       }
     } catch (error) {
       setUserData((prev) => ({
         ...prev,
-        status: true
+        status: true,
       }));
       console.error("Registration error:", error.response);
     }
@@ -52,10 +65,10 @@ const Login = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData(prevData => ({
+    setUserData((prevData) => ({
       ...prevData,
       click: true,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -94,18 +107,46 @@ const Login = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-            <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>
                 <h2>Sign In</h2>
                 <div className={cx("input-box")}>
-                  <input type="text" className={cx("user-input")} name="email" value={userData.email} onChange={handleInputChange} placeholder="Email" />
-                  { userData.click && !userData.email.includes("@gmail.com") && <strong className={cx("warning")}>Invalid email, please check again</strong>}
-                  <input type="password" className={cx("user-input")} name="password" value={userData.password} onChange={handleInputChange} placeholder="Password" />
+                  <input
+                    type="text"
+                    className={cx("user-input")}
+                    name="email"
+                    value={userData.email}
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                  />
+                  {userData.click && !userData.email.includes("@gmail.com") && (
+                    <strong className={cx("warning")}>
+                      Invalid email, please check again
+                    </strong>
+                  )}
+                  <input
+                    type="password"
+                    className={cx("user-input")}
+                    name="password"
+                    value={userData.password}
+                    onChange={handleInputChange}
+                    placeholder="Password"
+                  />
                 </div>
-                { userData.status && <strong className={cx("warning-sign-in")}>Unable to sign in, please check again</strong> }
-                <button className={cx("sign-in")} type="submit">Sign In</button>
+                {userData.status && (
+                  <strong className={cx("warning-sign-in")}>
+                    Unable to sign in, please check again
+                  </strong>
+                )}
+                <button className={cx("sign-in")} type="submit">
+                  Sign In
+                </button>
                 <strong className={cx("or-text")}>OR</strong>
                 <div className={cx("google")}>
-                  <img src="../../../public/assets/imgs/Logo-google-icon-PNG.png" alt="Error" onClick={handleLoginGoogle} />
+                  <img
+                    src="/assets/imgs/Logo-google-icon-PNG.png"
+                    alt="Error"
+                    onClick={handleLoginGoogle}
+                  />
                 </div>
                 <Link className={cx("forgot")} to="/forgot-password">
                   Forgot password?
@@ -136,7 +177,7 @@ const Login = () => {
                     >
                       Learn more
                     </strong>
-                    ) : (
+                  ) : (
                     <p>
                       The information collected by Google reCAPTCHA is subject
                       to the <strong>Google Privacy Policy</strong> and{" "}
@@ -152,6 +193,7 @@ const Login = () => {
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 };

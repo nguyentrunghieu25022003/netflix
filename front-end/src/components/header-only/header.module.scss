@@ -1,6 +1,6 @@
 .header {
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     width: 100%;
     padding: 20px 0;
 
@@ -24,7 +24,7 @@
             line-height: 1.2;
             color: var(--white-color);
             transition: text-decoration-color 0.3s ease, text-decoration-thickness 0.3s ease, text-underline-offset 0.3s ease;
-            
+
             &:hover {
                 color: var(--text-color);
             }
@@ -77,14 +77,15 @@
 }
 
 .custom {
-    opacity: 0.8;
+    background-color: var(--black-color) !important;
     width: 150px;
 }
 
 .account-setting {
     width: 100%;
     border-radius: 4px;
-    
+    background-color: var(--black-color) !important;
+
     .form-logout button {
         border: none;
         outline: none;
@@ -99,6 +100,7 @@
         gap: 10px;
         padding-left: 20px;
         width: 100%;
+
         &:hover {
             background-color: var(--box-color);
         }
@@ -139,14 +141,14 @@
 }
 
 .custom-tippy {
-    opacity: 0.8;
-    width: 400px;
+    width: 500px;
+    background-color: var(--black-color) !important;
 }
 
 .notify-table {
     width: 100%;
     border-radius: 4px;
-    opacity: 0.8;
+    background-color: var(--black-color) !important;
     padding-top: 10px;
 
     strong {
@@ -262,12 +264,14 @@
 }
 
 .custom-search {
+    min-width: 100vw !important;
     height: 400px;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: var(--black-color) transparent; 
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    scrollbar-color: var(--black-color) transparent;
+    padding-left: 10px;
+    margin-left: -10px;
+    background-color: var(--black-color) !important;
 }
 
 .custom-search ::-webkit-scrollbar {
@@ -287,14 +291,12 @@
     background-color: #555;
 }
 
-
 .search-result {
-    min-height: 100px;
-
+    min-height: 120px;
     img {
         display: block;
         width: 50px;
-        margin: 10px auto 0 auto;
+        margin: 40px auto 20px auto;
     }
 }
 

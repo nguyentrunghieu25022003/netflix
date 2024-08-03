@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import axios from "axios";
 
 const useAuthToken = () => {
-  const [userToken, setUserToken] = useState(Cookies.get("token"));
-  const [adminToken, setAdminToken] = useState(Cookies.get("adminToken"));
+  const [userToken, setUserToken] = useState(false);
 
   useEffect(() => {
-    const handleCookieChange = () => {
-      setUserToken(Cookies.get("token"));
-      setAdminToken(Cookies.get("adminToken"));
+    const checkAuthToken = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/users/auth/check-token`, {
+          withCredentials: true,
+        });
+        if (response.status === 200) {
+          setUserToken(true);
+        }
+      } catch (error) {
+        setUserToken(false);
+      }
     };
 
-    window.addEventListener("storage", handleCookieChange);
-    
-    return () => {
-      window.removeEventListener("storage", handleCookieChange);
-    };
+    checkAuthToken();
   }, []);
 
-  return { userToken, adminToken };
+  return { userToken };
 };
 
 export default useAuthToken;

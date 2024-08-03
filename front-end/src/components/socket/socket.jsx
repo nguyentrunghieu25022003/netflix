@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
-import Cookies from "js-cookie";
 import { fetchAllNotifications } from "../../api/index";
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
@@ -12,11 +11,8 @@ export const useNotifications = () => useContext(NotificationContext);
 // eslint-disable-next-line react/prop-types
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
-  const token = Cookies.get("token");
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
 
   useEffect(() => {
@@ -51,7 +47,7 @@ export const NotificationProvider = ({ children }) => {
       socket.disconnect();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   return (
     <NotificationContext.Provider value={{ notifications, setNotifications }}>

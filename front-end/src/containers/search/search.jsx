@@ -7,12 +7,10 @@ import Pagination from "../../components/pagination/pagination";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
 import { fetchMovies } from "../../api/index";
-import Cookies from "js-cookie";
 import Loading from "../../components/loading/loading";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const SearchResult = () => {
   const [searchParams] = useSearchParams();
   const storedKeyword = localStorage.getItem("searchKeyword") || "";
@@ -24,7 +22,7 @@ const SearchResult = () => {
     currentPage,
     setCurrentPage,
     totalPagesSearch,
-    setTotalPagesSearch
+    setTotalPagesSearch,
   } = useMovies();
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,16 +34,13 @@ const SearchResult = () => {
     const loadMovies = async () => {
       setIsLoading(true);
       try {
-        const token = Cookies.get("token");
         const options = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         };
-        const data = await fetchMovies(keyword, pageFromQuery, options);
-        setMovies(data.movies);
-        setCountMovies(data.totalMovies);
-        setTotalPagesSearch(data.totalPagesSearch);
+        const response = await fetchMovies(keyword, pageFromQuery, options);
+        setMovies(response.movies);
+        setCountMovies(response.totalMovies);
+        setTotalPagesSearch(response.totalPagesSearch);
         setCurrentPage(pageFromQuery);
       } catch (error) {
         console.error("Error loading movies:", error);
@@ -62,7 +57,7 @@ const SearchResult = () => {
     navigate(`?keyword=${encodeURIComponent(keyword)}&page=${pageNumber}`);
   };
 
-  if(isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -71,16 +66,28 @@ const SearchResult = () => {
       <div className="container">
         <div className="row" id={cx("search-result")}>
           <h2>{`Keyword: "${keyword}"`}</h2>
-          <strong className={cx("search-notify")}>There are a total of {countMovies} results</strong>
-          { movies.length === 0 && <b>Not found</b>}
-          { movies.map(item => {
-            const { slug, poster_url, name, origin_name, episode_current, year } = item.movie;
+          <strong className={cx("search-notify")}>
+            There are a total of {countMovies} results
+          </strong>
+          {movies.length === 0 && <b>Not found</b>}
+          {movies.map((item) => {
+            const {
+              slug,
+              poster_url,
+              name,
+              origin_name,
+              episode_current,
+              year,
+            } = item.movie;
             let episode = "tap-1";
-            if(episode_current.includes("Full")) {
+            if (episode_current.includes("Full")) {
               episode = "tap-full";
             }
             return (
-              <div key={slug} className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12">
+              <div
+                key={slug}
+                className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12"
+              >
                 <Movie
                   slug={slug}
                   poster_url={poster_url}
@@ -92,7 +99,7 @@ const SearchResult = () => {
                 />
               </div>
             );
-          }) }
+          })}
         </div>
         <Pagination
           pages={totalPagesSearch}

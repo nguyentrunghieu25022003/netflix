@@ -8,7 +8,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useEffect, useState } from "react";
 import { useMovies } from "../../context/movie-provider";
-import Cookies from "js-cookie";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
@@ -34,12 +33,11 @@ const Header = () => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const token = Cookies.get("token");
-  const avatarUrl = Cookies.get("avatar");
+  const userFromStorage = localStorage.getItem("user");
+  const userObject = JSON.parse(userFromStorage);
+  const avatarUrl = userObject?.avatar;
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
   const location = useLocation();
 
@@ -134,16 +132,14 @@ const Header = () => {
       theme: "dark",
     });
     setTimeout(() => {
-      Cookies.remove("email", { path: "/" });
-      Cookies.remove("token", { path: "/" });
-      Cookies.remove("avatar", { path: "/" });
+      localStorage.removeItem("user");
       window.location.reload();
     }, 3000)
   };
 
   const isActive = (path) => location.pathname.includes(path);
 
-  const unreadNotificationsCount = notifications.filter(
+  const unreadNotificationsCount = notifications?.filter(
     (notification) => notification.status === "unread"
   ).length;
 
@@ -334,7 +330,7 @@ const Header = () => {
               <Tippy
                 interactive={true}
                 placement="bottom"
-                delay={500}
+                delay={300}
                 duration={200}
                 className={cx("custom-tippy")}
                 content={
@@ -354,7 +350,7 @@ const Header = () => {
                           the movie :D
                         </p>
                       </div>
-                      {notifications.map((notification) => {
+                      {notifications?.map((notification) => {
                         const date = new Date(notification.timestamp);
                         const options = {
                           year: "numeric",
@@ -388,7 +384,7 @@ const Header = () => {
                                 alt={notification.slug}
                                 className={cx("img")}
                               />
-                              <div className={cx("notify-inf")}>
+                              <div className={cx("notify-inf")} style={ notification.message.includes("Movie") ? { marginLeft: "10px" } : {} }>
                                 <strong>{notification.message}</strong>
                                 <span>{formattedDate}</span>
                               </div>
@@ -440,9 +436,6 @@ const Header = () => {
                   className={cx("custom")}
                   content={
                     <div className={cx("account-setting")}>
-                      <div className={cx("triangle-border")}>
-                        <span className={cx("triangle")}></span>
-                      </div>
                       <Link to="/profile">
                         <AccountBoxIcon className={cx("icon")} /> Profile
                       </Link>
@@ -457,7 +450,6 @@ const Header = () => {
                         className={cx("form-logout")}
                         onSubmit={handleLogout}
                       >
-                        <input type="hidden" name="token" value={token} />
                         <button type="submit" onClick={clearTokenCookie}>
                           <ExitToAppIcon className={cx("icon")} />
                           Log out

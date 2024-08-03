@@ -6,12 +6,15 @@ const ConfirmCode = require("../../../models/confirm-code.model");
 const Feedback = require("../../../models/feedback.model");
 const History = require("../../../models/history.model");
 const Token = require("../../../models/refresh-token.model");
-/* const { createAccessToken, createRefreshToken } = require("../../../middlewares/jwt"); */
-const createToken = require("../../../middlewares/jwt");
+const {
+  createAccessToken,
+  createRefreshToken,
+} = require("../../../middlewares/jwt");
 const mailOptions = require("../../../helper/mail");
 const createRandomFourDigit = require("../../../helper/confirm");
 const nodemailer = require("nodemailer");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 module.exports.getUserProfile = async (req, res) => {
   try {
@@ -36,15 +39,34 @@ module.exports.googleCallback = (req, res, next) => {
     {
       failureRedirect: "/auth/login?error=google-login-failed",
     },
-    (err, user, info) => {
+    async (err, user, info) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
       if (!user) {
         return res.redirect("/auth/login?error=google-login-failed");
       }
-      const token = createToken(user._id);
-      res.redirect(`${process.env.CLIENT_URL}/login-success/${encodeURIComponent(token)}/${encodeURIComponent(user.email)}/${encodeURIComponent(user.avatar)}`);
+      const token = createAccessToken(user._id);
+      const refreshToken = createRefreshToken(user._id);
+      const newToken = new Token({
+        token: refreshToken,
+        userId: user._id,
+      });
+      await newToken.save();
+      if (user.role === "user") {
+        res.cookie("userToken", token, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 15 * 60 * 1000),
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "None",
+          path: "/",
+        });
+      }
+      res.redirect(
+        `${process.env.CLIENT_URL}/login-success/${encodeURIComponent(
+          token
+        )}/${encodeURIComponent(user.email)}/${encodeURIComponent(user.avatar)}`
+      );
     }
   )(req, res, next);
 };
@@ -52,14 +74,10 @@ module.exports.googleCallback = (req, res, next) => {
 module.exports.handleLoginSuccess = async (req, res) => {
   try {
     const { token, email, avatar } = req.params;
-    if(!token || !email || !avatar) {
-      return res.status(403).message("Invalid credentials");
+    if (!token || !email || !avatar) {
+      res.status(403).json({ message: "Invalid credentials" });
     }
-    res.json({
-      accessToken: token,
-      email: email,
-      avatar: avatar
-    });
+    res.json({ message: "Login success !" });
   } catch (err) {
     res.status(500).json({ message: "Error: " + err.message });
   }
@@ -124,36 +142,95 @@ module.exports.userLogin = async (req, res) => {
     if (user.isLocked) {
       return res.status(401).json({ message: "Account locked !" });
     }
-    const token = createToken(user._id);
-    res.cookie("token", token, {
+    const token = createAccessToken(user._id);
+    const refreshToken = createRefreshToken(user._id);
+    const newToken = new Token({
+      token: refreshToken,
+      userId: user._id,
+    });
+    await newToken.save();
+    res.cookie(user.role === "user" ? "userToken" : "adminToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 15 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "None",
+      path: "/",
     });
-    /* res.cookie("email", email, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 7200000),
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-    res.cookie("avatar", user.avatar, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 7200000),
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    }); */
-    res.json({ message: "Success" });
+    if (user.role === "admin") {
+      res.json({ message: "Success !" });
+    } else {
+      res.json({ message: "Success !", user: user });
+    }
   } catch (error) {
     res.status(500).json({ message: "Error login user", error });
   }
 };
 
+module.exports.checkToken = async (req, res) => {
+  try {
+    let token;
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+    if (user.role === "user") {
+      token = req.cookies.userToken;
+    } else {
+      token = req.cookies.adminToken;
+    }
+    if (!token) {
+      return res.status(401).json({ message: "Token is required" });
+    }
+    res.json({ message: "Success" });
+  } catch (error) {
+    res.status(500).json({ message: "Error", error });
+  }
+};
+
+module.exports.releaseAccessToken = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const refreshTokenDoc = await Token.findOne({ userId: userId });
+    if (!refreshTokenDoc) {
+      return res.status(403).json({ message: "Refresh token not found!" });
+    }
+    const refreshToken = refreshTokenDoc.token;
+    const user = await User.findById(userId);
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ message: "Invalid refresh token!" });
+        }
+        const newAccessToken = createAccessToken(decoded.userId);
+        res.cookie(
+          user.role === "user" ? "userToken" : "adminToken",
+          newAccessToken,
+          {
+            httpOnly: true,
+            expires: new Date(Date.now() + 15 * 60 * 1000),
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "None",
+            path: "/",
+          }
+        );
+        res.json({ message: "Access token refreshed" });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ message: "Error", error });
+  }
+};
+
 module.exports.userLogout = async (req, res) => {
   try {
-    const authHeader = await req.headers["authorization"];
-    const token = authHeader ? authHeader.split(" ")[1] : null;
+    let token;
     const userId = req.user.userId;
+    const user = await User.findById(userId);
+    if (user.role === "user") {
+      token = req.cookies.userToken;
+    } else {
+      token = req.cookies.adminToken;
+    }
     if (token) {
       const newBlacklist = await new Blacklisting({
         userId: userId,
@@ -161,7 +238,9 @@ module.exports.userLogout = async (req, res) => {
         expiresAt: new Date(Date.now() + 7200000),
       });
       await newBlacklist.save();
+      await Token.findOneAndDelete({ userId: userId });
     }
+    res.clearCookie(user.role === "user" ? "userToken" : "adminToken");
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     res.status(500).json({ message: "Error logout!" });
@@ -290,9 +369,11 @@ module.exports.updateHistory = async (req, res) => {
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
-    if(history) {
-      const movieIndex = history.movieList.findIndex((item) => item.slug === movie.movie.slug);
-      if(movieIndex !== -1) {
+    if (history) {
+      const movieIndex = history.movieList.findIndex(
+        (item) => item.slug === movie.movie.slug
+      );
+      if (movieIndex !== -1) {
         history.movieList[movieIndex].episode = episode;
       } else {
         history.movieList.push({
@@ -301,7 +382,7 @@ module.exports.updateHistory = async (req, res) => {
           slug: movie.movie.slug,
           time: movie.movie.time,
           year: movie.movie.year,
-          episode: episode
+          episode: episode,
         });
       }
     } else {
@@ -314,12 +395,12 @@ module.exports.updateHistory = async (req, res) => {
             slug: movie.movie.slug,
             time: movie.movie.time,
             year: movie.movie.year,
-            episode: episode
-          }
-        ]
+            episode: episode,
+          },
+        ],
       });
     }
-    await history.save()
+    await history.save();
     res.json({ message: "History updated successfully!" });
   } catch (err) {
     res.status(500).json({ message: err.message });

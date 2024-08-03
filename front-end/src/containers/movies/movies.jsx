@@ -4,7 +4,6 @@ import queryString from "query-string";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchAllMovies } from "../../api/index";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import Pagination from "../../components/pagination/pagination";
 import Sort from "../../components/sort/sort";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
@@ -20,11 +19,8 @@ const Movies = () => {
   const queryParams = queryString.parse(location.search);
   const currentPage = parseInt(queryParams.page) || 1;
   const category = queryParams.genre || "";
-  const token = Cookies.get("adminToken");
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);

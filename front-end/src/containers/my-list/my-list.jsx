@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { fetchAllMyList } from "../../api/index";
 import Loading from "../../components/loading/loading";
 import Movie from "../../components/movie/movie";
-import Cookies from "js-cookie";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import axios from "axios";
@@ -20,13 +19,13 @@ const MyList = () => {
     currentIndex: 1,
     isLoading: false,
   });
-  const email = Cookies.get("email");
-  const token = Cookies.get("token");
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
+  const userFromStorage = localStorage.getItem("user");
+  const userObject = JSON.parse(userFromStorage);
+  const email = userObject.email;
+  
 
   useEffect(() => {
     setState(prev => ({ ...prev, isLoading: true }));
@@ -39,14 +38,13 @@ const MyList = () => {
           checkMovies: movies.length === 0,
           isLoading: false,
         }));
-        console.log(response)
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
         setState(prev => ({ ...prev, isLoading: false, checkMovies: true }));
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   if (state.isLoading) {
     return <Loading />;

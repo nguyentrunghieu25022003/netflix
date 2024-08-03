@@ -59,7 +59,7 @@ module.exports.handleSearchResult = async (req, res) => {
     let objectSearch = searchHelper(req.query);
     if (req.query.keyword) {
       find["movie.name"] = objectSearch.regex;
-    };
+    }
     const results = await MainModel.find(find);
     res.json(results);
   } catch (err) {
@@ -79,10 +79,19 @@ module.exports.searchFilms = async (req, res) => {
       find["movie.name"] = objectSearch.regex;
     }
     const countSearchMovies = await MainModel.countDocuments(find);
-    const totalPagesSearch = Math.ceil(countSearchMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countSearchMovies);
+    const totalPagesSearch = Math.ceil(
+      countSearchMovies / initPagination.limitItems
+    );
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countSearchMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countSearchMovies,
@@ -96,7 +105,6 @@ module.exports.searchFilms = async (req, res) => {
 
 module.exports.getAllMovies = async (req, res) => {
   try {
-    console.log(req);
     const find = {};
     let initPagination = {
       currentPage: req.query.page ? parseInt(req.query.page) : 1,
@@ -117,9 +125,16 @@ module.exports.getAllMovies = async (req, res) => {
     }
     const countMovies = await MainModel.countDocuments(find);
     const totalPages = Math.ceil(countMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countMovies);
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -153,9 +168,16 @@ module.exports.getAllSeries = async (req, res) => {
     }
     const countMovies = await MainModel.countDocuments(find);
     const totalPages = Math.ceil(countMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countMovies);
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -189,9 +211,16 @@ module.exports.getAllFeatureFilms = async (req, res) => {
     }
     const countMovies = await MainModel.countDocuments(find);
     const totalPages = Math.ceil(countMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countMovies);
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -225,9 +254,16 @@ module.exports.getAllTVShows = async (req, res) => {
     }
     const countMovies = await MainModel.countDocuments(find);
     const totalPages = Math.ceil(countMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countMovies);
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -261,9 +297,16 @@ module.exports.getAllAnimatedMovies = async (req, res) => {
     }
     const countMovies = await MainModel.countDocuments(find);
     const totalPages = Math.ceil(countMovies / initPagination.limitItems);
-    const objectPagination = paginationHelper(initPagination, req.query, countMovies);
+    const objectPagination = paginationHelper(
+      initPagination,
+      req.query,
+      countMovies
+    );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find)
+      .sort(sort)
+      .skip(objectPagination.skip)
+      .limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -300,7 +343,7 @@ module.exports.addMovieToMyList = async (req, res) => {
       myList = new MyList({ userId: user._id, movie: [] });
     }
 
-    const existingIndex = myList.movie.findIndex(m => m.slug === movieSlug);
+    const existingIndex = myList.movie.findIndex((m) => m.slug === movieSlug);
     if (existingIndex !== -1) {
       myList.movie.splice(existingIndex, 1);
       await myList.save();
@@ -502,13 +545,17 @@ module.exports.handleStatusVideo = async (req, res) => {
     await notification.save();
     const score = scoreCalculator(ratingValue);
     const totalScore = await TotalScore.findOne({ movieId: movie._id });
-    if(totalScore) {
-      await TotalScore.findOneAndUpdate({ movieId: movie._id, voteQuantity: totalScore.voteQuantity + 1, totalScore: totalScore.totalScore + score });
+    if (totalScore) {
+      await TotalScore.findOneAndUpdate({
+        movieId: movie._id,
+        voteQuantity: totalScore.voteQuantity + 1,
+        totalScore: totalScore.totalScore + score,
+      });
     } else {
       const newScore = new TotalScore({
         movieId: movie._id,
         voteQuantity: 1,
-        totalScore: score
+        totalScore: score,
       });
       await newScore.save();
     }
@@ -539,23 +586,27 @@ module.exports.getMovieDetailsWithComments = async (req, res) => {
       Comment.find({ movieId: movie._id }),
       User.findById(userId),
       MyList.findOne({ userId }),
-      Status.findOne({ userId })
+      Status.findOne({ userId }),
     ]);
 
-    let isMyList = myList && myList.movie.some(m => m.slug === slug);
+    let isMyList = myList && myList.movie.some((m) => m.slug === slug);
 
     let movieStatus = "";
     if (status) {
-      const foundMovieStatus = status.movies.find(m => m.movieId.equals(movie._id));
+      const foundMovieStatus = status.movies.find((m) =>
+        m.movieId.equals(movie._id)
+      );
       if (foundMovieStatus) {
         movieStatus = foundMovieStatus.status;
       }
     }
 
-    const score = totalScore ? {
-      totalScore: totalScore.totalScore,
-      voteQuantity: totalScore.voteQuantity
-    } : {};
+    const score = totalScore
+      ? {
+          totalScore: totalScore.totalScore,
+          voteQuantity: totalScore.voteQuantity,
+        }
+      : {};
 
     const response = {
       detail: movie,
@@ -574,10 +625,9 @@ module.exports.getMovieDetailsWithComments = async (req, res) => {
 
 module.exports.getNotifications = async (req, res) => {
   try {
-    /* const userId = req.user.userId;
+    const userId = req.user.userId;
     const notifications = await Notification.findOne({ userId: userId });
-    res.json(notifications); */
-    res.json({ message: "Ok 1"});
+    res.json(notifications);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error fetching from the database." });
@@ -586,17 +636,17 @@ module.exports.getNotifications = async (req, res) => {
 
 module.exports.handleNotifications = async (req, res) => {
   try {
-    /* const userId = req.user.userId;
+    const userId = req.user.userId;
     const { notifySlug } = req.body;
     const notifications = await Notification.findOne({ userId: userId });
     if (notifications && notifications.messages) {
-      notifications.messages.forEach(message => {
+      notifications.messages.forEach((message) => {
         if (message.slug === notifySlug) {
           message.status = "read";
         }
       });
       await notifications.save();
-    } */
+    }
     res.json({ message: "Success !" });
   } catch (err) {
     console.error(err);

@@ -114,7 +114,7 @@ const ImageSlider = ({ images }) => {
               </div>
             )
           )}
-          {!mediaState.videoLoaded && currentImage.name && (
+          {currentImage.name && (
             <>
               <div className={cx("desc-slider", "active")}>
                 <div className="d-flex align-items-center gap-3">

@@ -5,5 +5,5 @@ const adminRouter = require("./admin.route");
 module.exports = async (app) => {
     app.use("/api/movies", movieRouter);
     app.use("/api/users", userRouter);
-    app.use("/api/admin", adminRouter);
-}
+    app.use("/api", adminRouter);
+};

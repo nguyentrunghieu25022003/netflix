@@ -6,8 +6,8 @@ import Movie from "../movie/movie";
 import { useEffect, useState } from "react";
 import Pagination from "../pagination/pagination";
 import Sort from "../sort/sort";
-import Cookies from "js-cookie";
 import Loading from "../loading/loading";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const cx = classNames.bind(styles);
 
@@ -18,22 +18,34 @@ const Movies = ({ fetchAllMovies, title }) => {
   const queryParams = queryString.parse(location.search);
   const currentPage = parseInt(queryParams.page) || 1;
   const category = queryParams.genre || "";
-  const token = Cookies.get("token");
-  const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [checkMovies, setCheckMovies] = useState(false);
   const [filters, setFilters] = useState({ category });
   const [isLoading, setIsLoading] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const currentIndexData = JSON.parse(localStorage.getItem("currentIndexData"));
   if (currentIndexData) {
     currentIndexData.currentIndex = 1;
     localStorage.setItem("currentIndexData", JSON.stringify(currentIndexData));
   }
+  const options = {
+    withCredentials: true,
+  };
+
+  const fetchMovies = async (preloadImages) => {
+    try {
+      const response = await fetchAllMovies(currentPage, filters, options);
+      setMovies(response.movies);
+      setTotalPages(response.totalPages);
+      setCheckMovies(response.movies.length === 0);
+      setIsLoading(false);
+      return preloadImages(response.movies);
+    } catch (err) {
+      setIsLoading(false);
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -45,25 +57,14 @@ const Movies = ({ fetchAllMovies, title }) => {
       });
       await Promise.all(promises);
     };
-    
+
     preloadImages().catch((error) =>
       console.log("Error preloading images:", error)
     );
 
-    fetchAllMovies(currentPage, filters, options)
-      .then((response) => {
-        setMovies(response.movies);
-        setTotalPages(response.totalPages);
-        setCheckMovies(response.movies.length === 0);
-        setIsLoading(false);
-        return preloadImages(response.movies);
-      })
-      .catch((error) => { 
-        setIsLoading(false);
-        console.error("Error fetching movies:", error);
-      })
+    fetchMovies(preloadImages);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, currentPage, fetchAllMovies, token]);
+  }, [filters, currentPage, fetchAllMovies]);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -78,6 +79,32 @@ const Movies = ({ fetchAllMovies, title }) => {
     setFilters(newFilters);
     paginate(1);
   };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset;
+      const windowSize = window.innerHeight;
+      const bodyHeight = document.body.offsetHeight;
+      const scrolled = (scrollPosition + windowSize) / bodyHeight;
+      if (scrolled > 0.5) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -101,16 +128,28 @@ const Movies = ({ fetchAllMovies, title }) => {
         </div>
         <div className="row" id={cx("movies-page")} key={currentPage}>
           {checkMovies ? (
-            <strong className={cx("warning")}>There are no movies in this genre/country</strong>
+            <strong className={cx("warning")}>
+              There are no movies in this genre/country
+            </strong>
           ) : (
             movies.map((item) => {
-              const { slug, poster_url, origin_name, episode_current, year, view } = item.movie;
+              const {
+                slug,
+                poster_url,
+                origin_name,
+                episode_current,
+                year,
+                view,
+              } = item.movie;
               let episode = 1;
-              if(episode_current.includes("Full")) {
+              if (episode_current.includes("Full")) {
                 episode = "full";
               }
               return (
-                <div key={slug} className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12">
+                <div
+                  key={slug}
+                  className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12"
+                >
                   <Movie
                     slug={slug}
                     poster_url={poster_url}
@@ -131,6 +170,11 @@ const Movies = ({ fetchAllMovies, title }) => {
           paginate={paginate}
         />
       </div>
+      {showButton && (
+        <div className={cx("scroll-to-top")} onClick={handleScrollToTop}>
+          <KeyboardArrowUpIcon className={cx("icon")} />
+        </div>
+      )}
     </div>
   );
 };

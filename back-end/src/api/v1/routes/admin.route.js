@@ -1,20 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
+const userController = require("../controllers/user.controller");
 const controller = require("../controllers/admin.controller");
 const authenticateToken = require("../../../middlewares/authenticate");
 
-router.post("/login", controller.adminLogin);
-router.get("/auth/logout", authenticateToken, controller.adminLogout);
-router.get("/dashboard", controller.getDashboard);
-router.post("/create-movie", controller.addMovie);
-router.delete("/delete/:movieId", controller.deleteMovie);
-router.get("/edit/:movieId", controller.editMoviePage);
-router.put("/edit/:movieId/upload", controller.handleEditMovie);
-router.get("/users", controller.getUsers);
-router.patch("/users/lock", controller.lockUser);
-router.patch("/users/unlock", controller.unlockUser);
-router.post("/report/send", controller.receiveReport);
-router.get("/all-report", controller.getAllReport);
+router.get("/users/auth/check-token", authenticateToken, userController.checkToken);
+router.get("/users/auth/refresh-token", authenticateToken, userController.releaseAccessToken);
+router.post("/users/auth/login", userController.userLogin);
+router.get("/users/auth/logout", authenticateToken, userController.userLogout);
+router.get("/admin/dashboard", controller.getDashboard);
+router.post("/admin/create-movie", controller.addMovie);
+router.delete("/admin/delete/:movieId", controller.deleteMovie);
+router.get("/admin/edit/:movieId", controller.editMoviePage);
+router.put("/admin/edit/:movieId/upload", controller.handleEditMovie);
+router.get("/admin/users", controller.getUsers);
+router.patch("/admin/users/lock", controller.lockUser);
+router.patch("/admin/users/unlock", controller.unlockUser);
+router.post("/admin/report/send", controller.receiveReport);
+router.get("/admin/all-report", controller.getAllReport);
 
 module.exports = router;

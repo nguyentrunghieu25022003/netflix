@@ -321,4 +321,9 @@ export const dataCountry = [
     slug: "viet-nam",
     name: "Việt Nam",
   },
+  {
+    key: "3cf479dac2caaead12dfa36105b1c402",
+    slug: "nam-phi",
+    name: "South Africa",
+  },
 ];

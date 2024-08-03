@@ -3,12 +3,22 @@ const Blacklisting = require("../models/blacklist.model");
 
 const authenticateToken = async (req, res, next) => {
   const authHeader = await req.headers["authorization"];
-  const token = authHeader ? authHeader.split(" ")[1] : null;
+  const userToken = req.cookies.userToken;
+  const adminToken = req.cookies.adminToken;
+  let token = null;
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    token = authHeader.split(" ")[1];
+  } else if (userToken) {
+    token = userToken;
+  } else if (adminToken) {
+    token = adminToken;
+  }
+
   if (!token) {
     console.error("Token not found in the authorization header");
     return res.sendStatus(401);
   }
-  console.log("Cookies:", req.cookies.token);
   const blacklistedToken = await Blacklisting.findOne({ token: token });
   if (blacklistedToken) {
     return res.status(403).json({ error: "Token is invalid" });
@@ -18,10 +28,10 @@ const authenticateToken = async (req, res, next) => {
     if (err) {
       return res.status(403).json({ error: err.message });
     }
-    console.log("Session token:", req.session.token);
+    console.log("Checked Token");
     req.user = user;
     next();
-  });  
+  });
 };
 
 module.exports = authenticateToken;

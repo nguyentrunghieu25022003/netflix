@@ -1,20 +1,29 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import axios from "axios";
 
 const LoginSuccess = () => {
   const { token, email, avatar } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token && email && avatar) {
-      Cookies.set("token", token, { expires: 1 / 12 });
-      Cookies.set("email", email, { expires: 1 / 12 });
-      Cookies.set("avatar", avatar, { expires: 1 / 12 });
-      window.location.href = "/";
-    } else {
-      navigate("/auth/login");
-    }
+    const handleLoginSuccess = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5173/login-success/${token}/${email}/${avatar}`);
+        if(response.status === 200) {
+          localStorage.setItem("user", JSON.stringify({
+            email: email,
+            avatar: avatar
+          }));
+          window.location.href = "/";
+        } else {
+          navigate("/auth/login");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    handleLoginSuccess();
   }, [token, email, avatar, navigate]);
 
   return null;

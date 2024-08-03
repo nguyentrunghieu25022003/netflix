@@ -3,7 +3,6 @@ import { detailFilm } from "../../api/index";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./detail.module.scss";
-import Cookies from "js-cookie";
 import axios from "axios";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -46,14 +45,13 @@ const Detail = () => {
   const [isReported, setIsReported] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
   const episodeContainerRef = useRef(null);
-  const email = Cookies.get("email");
-  const token = Cookies.get("token");
-  const avatarUrl = Cookies.get("avatar");
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
+  const userFromStorage = localStorage.getItem("user");
+  const userObject = JSON.parse(userFromStorage);
+  const email = userObject.email;
+  const avatarUrl = userObject.avatar;
   const totalStars = 10;
 
   const fetchMovieData = async () => {
@@ -81,7 +79,6 @@ const Detail = () => {
           JSON.stringify({ key: slug, currentIndex: 1 })
         );
       }
-      console.log(currentIndexData.currentIndex)
       setMovieData({
         videoUrl: episodes[currentIndexData.currentIndex - 1].link_embed,
         episodes,

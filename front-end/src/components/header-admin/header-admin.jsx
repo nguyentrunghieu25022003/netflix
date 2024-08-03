@@ -1,16 +1,14 @@
 import classNames from "classnames/bind";
 import styles from "./header.module.scss";
 import axios from "axios";
-import Cookies from "js-cookie";
+import useAuthToken from "../../utils/auth";
 
 const cx = classNames.bind(styles);
 
 const Header = () => {
-    const token = Cookies.get("adminToken");
+    const { adminToken } =useAuthToken();
     const options = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      withCredentials: true
     };
 
     const handleLogout = async (event) => {
@@ -22,15 +20,11 @@ const Header = () => {
         );
         if (response.status === 200) {
           console.log("Logout successful!");
+          window.location.reload();
         }
       } catch (error) {
         console.error("Error:", error);
       }
-    };
-
-    const clearTokenCookie = () => {
-      Cookies.remove("adminToken", { path: "/" });
-      window.location.reload();
     };
 
     return (
@@ -38,9 +32,8 @@ const Header = () => {
             <div className="container">
                 <div className="col-12 d-flex align-items-center justify-content-between">
                     <h2>Administrator</h2>
-                    { token && <form className={cx("form-logout")} onSubmit={handleLogout}>
-                        <input type="hidden" name="token" value={token} />
-                        <button type="submit" className={cx("log-out")} onClick={clearTokenCookie}>
+                    { adminToken && <form className={cx("form-logout")} onSubmit={handleLogout}>
+                        <button type="submit" className={cx("log-out")}>
                             Log out
                         </button>
                     </form> }

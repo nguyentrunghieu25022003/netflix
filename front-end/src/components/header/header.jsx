@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 const Header = () => {
-  const token = localStorage.getItem("token");
+  const userFromStorage = localStorage.getItem("user");
   return (
     <header className={cx("header")}>
       <div className="container">
@@ -31,7 +31,7 @@ const Header = () => {
             </Link>
             <div className="d-flex justify-content-between align-items-center gap-5">
               <Languages />
-              { token ? ( <Button path={"/auth/logout"}><span style={{ fontSize: "1.5rem" }}>Sign Out</span></Button> ) : ( <Button path={"/auth/login"}><span style={{ fontSize: "1.5rem" }}>Sign In</span></Button> ) }           
+              { userFromStorage ? ( <Button path={"/auth/logout"}><span style={{ fontSize: "1.5rem" }}>Sign Out</span></Button> ) : ( <Button path={"/auth/login"}><span style={{ fontSize: "1.5rem" }}>Sign In</span></Button> ) }           
             </div>
           </div>
         </div>

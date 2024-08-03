@@ -4,9 +4,19 @@ import DefaultLayout from "./layouts/default";
 import AdminLayout from "./layouts/admin-layout";
 import AdminLayoutNoLogin from "./layouts/admin-layout-no-login";
 import useAuthToken from "./utils/auth";
+import setupAutoRefresh from "./utils/refresh-token";
+import { useEffect } from "react";
 
 function App() {
-  const { userToken, adminToken } = useAuthToken();
+  const { userToken } = useAuthToken();
+
+  useEffect(() => {
+    if (userToken && userToken !== "undefined") {
+      setupAutoRefresh();
+      console.log("User token is set, auto refresh setup");
+    }
+  }, [userToken]);
+
   return (
     <Router>
       <div className="App">
@@ -45,6 +55,7 @@ function App() {
             } else {
               Layout = DefaultLayout;
             }
+         
             return (
               <Route
                 key={index}
@@ -76,7 +87,7 @@ function App() {
                 path={route.path}
                 element={
                   <Layout>
-                    {adminToken && (route.path === "/admin/login") ? (
+                    {userToken && (route.path === "/admin/login") ? (
                       <Navigate to="/admin/dashboard" />
                     ) : (
                       <Page />
@@ -101,7 +112,7 @@ function App() {
                 path={route.path}
                 element={
                   <Layout>
-                    {adminToken ? (
+                    {userToken ? (
                       <Page />
                     ) : (
                       <Navigate to="/admin/login" />

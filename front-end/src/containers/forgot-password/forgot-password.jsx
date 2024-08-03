@@ -10,6 +10,7 @@ const cx = classNames.bind(styles);
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -25,6 +26,7 @@ const ForgotPassword = () => {
             console.error("Failed ", error);
         }
     }
+    
     return (
         <div className={cx("forgot-password")}>
             <div className="container">

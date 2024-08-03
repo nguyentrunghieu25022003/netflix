@@ -1,6 +1,5 @@
 import classNames from "classnames/bind";
 import styles from "./history.module.scss";
-import Cookies from "js-cookie";
 import { fetchAllHistory } from "../../api/index";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,11 +11,8 @@ const cx = classNames.bind(styles);
 const UserHistory = () => {
   const [histories, setHistories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const token = Cookies.get("token");
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true
   };
 
   const getAllHistory = async () => {
@@ -45,7 +41,7 @@ const UserHistory = () => {
     setIsLoading(true);
     getAllHistory();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -62,7 +58,7 @@ const UserHistory = () => {
         {histories.length > 0 ? (
           <div className={cx("row")} id={cx("my-history")}>
             {histories.map((item, index) => (
-              <div key={index} className="col-3 mt-5 p-5" style={{ backgroundColor: "#111319" }}>
+              <div key={index} className="col-3 mt-5 p-5">
                 <div className="row">
                   <div className="col-12">
                     <div className={cx("movie-img")}>

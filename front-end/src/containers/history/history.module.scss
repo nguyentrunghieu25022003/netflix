@@ -12,7 +12,7 @@ a {
         font-weight: 500;
         line-height: 1.5;
         color: var(--white-color);
-        padding-bottom: 40px;
+        padding: 0 0 40px 20px;
     }
 }
 
@@ -38,6 +38,9 @@ a {
         font-weight: 600;
         line-height: 1.4;
         color: var(--white-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     p {
@@ -83,6 +86,10 @@ a {
         line-height: 1.4;
         color: var(--white-color);
         border-radius: 4px;
+
+        &:hover {
+            background-color: #c1111a84;
+        }
     }
 }
 

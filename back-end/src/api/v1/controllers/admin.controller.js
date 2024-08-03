@@ -4,55 +4,6 @@ const MainModel = require("../../../models/movie.model");
 const User = require("../../../models/user.model");
 const Comment = require("../../../models/comment.model");
 const Report = require("../../../models/report.model");
-const { createAccessToken, createRefreshToken } = require("../../../middlewares/jwt");
-
-module.exports.adminLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-    if (!user) {
-      return res.status(401).json({ message: "Email not found." });
-    }
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res.status(401).json({ message: "Password invalid." });
-    }
-    if(user.role !== "admin") {
-      return res.status(401).json({ message: "Invalid" });
-    }
-    const accessToken = createAccessToken(user._id, "admin");
-    const refreshToken = createRefreshToken(user._id, "admin");
-    const newRefreshToken = new Token({
-      token: refreshToken,
-      userId: user._id,
-    });
-    await newRefreshToken.save();
-    req.session.adminRefreshToken = refreshToken;
-    res.cookie("adminAccessToken", accessToken, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 15 * 60 * 1000),
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict"
-    });
-    res.json({ accessToken: accessToken });
-  } catch (err) {
-    res.status(500).send("Message: " + err.message);
-  }
-};
-
-module.exports.adminLogout = async (req, res) => {
-  try {
-    const refreshToken = req.session.adminRefreshToken;
-    if (!refreshToken) {
-      return res.status(400).json({ message: "No refresh token found" });
-    }
-    await Token.findOneAndDelete({ token: refreshToken });
-    delete req.session.adminRefreshToken;
-    res.status(200).json({ message: "Logout successful" });
-  } catch (error) {
-    res.status(500).json({ message: "Error logout!" });
-  }
-};
 
 module.exports.getDashboard = async (req, res) => {
   try {
@@ -98,25 +49,27 @@ module.exports.addMovie = async (req, res) => {
       director,
       category,
       country,
-      episodes
+      episodes,
     } = req.body;
     const convertActor = String(actor).split(",");
-    const convertEpisodesObject = String(episodes).split(",").map(episode => {
-      const arr = episode.split("|");
-      return {
-        name: arr[0],
-        slug: arr[1],
-        filename: arr[2],
-        link_embed: arr[3],
-        link_m3u8: arr[4],
-      };
-    });
+    const convertEpisodesObject = String(episodes)
+      .split(",")
+      .map((episode) => {
+        const arr = episode.split("|");
+        return {
+          name: arr[0],
+          slug: arr[1],
+          filename: arr[2],
+          link_embed: arr[3],
+          link_m3u8: arr[4],
+        };
+      });
     const convertDirector = director.split(" ");
     const convertEpisodes = [
       {
-        "server_name": "#Hà Nội",
-        "server_data": convertEpisodesObject
-      }
+        server_name: "#Hà Nội",
+        server_data: convertEpisodesObject,
+      },
     ];
     const convertYear = Number(year);
     const id = crypto.randomBytes(16).toString("hex");
@@ -153,10 +106,10 @@ module.exports.addMovie = async (req, res) => {
         category: category,
         country: country,
       },
-      episodes: convertEpisodes
+      episodes: convertEpisodes,
     });
     await newMovie.save();
-    res.json({ message: "Success !"});
+    res.json({ message: "Success !" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Message: " + err.message);
@@ -192,21 +145,21 @@ module.exports.handleEditMovie = async (req, res) => {
     const objectInArray = Object.entries(movieObj);
     const movieItem = [];
     objectInArray.forEach(([key, value]) => {
-      movieItem.push({key, value});
+      movieItem.push({ key, value });
     });
-    
+
     const movieUpdate = {};
     movieItem.forEach((item) => {
-      if(item.value !== '') {
+      if (item.value !== "") {
         movieUpdate[item.key] = item.value;
       }
     });
 
-    if(Object.keys(movieUpdate).length === 0) {
+    if (Object.keys(movieUpdate).length === 0) {
       return res.status(401).send("Invalid !");
     }
 
-    res.json({ message: "Success "});
+    res.json({ message: "Success " });
   } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
@@ -224,7 +177,7 @@ module.exports.getUsers = async (req, res) => {
 module.exports.lockUser = async (req, res) => {
   try {
     const { userIdList } = req.body;
-    await User.updateMany({ _id: { $in: userIdList } }, { isLocked: true } );
+    await User.updateMany({ _id: { $in: userIdList } }, { isLocked: true });
     res.json("Success");
   } catch (err) {
     res.status(500).send("Message: " + err.message);
@@ -234,7 +187,7 @@ module.exports.lockUser = async (req, res) => {
 module.exports.unlockUser = async (req, res) => {
   try {
     const { userIdList } = req.body;
-    await User.updateMany({ _id: { $in: userIdList } }, { isLocked: false } );
+    await User.updateMany({ _id: { $in: userIdList } }, { isLocked: false });
     res.json("Success");
   } catch (err) {
     res.status(500).send("Message: " + err.message);
@@ -244,7 +197,7 @@ module.exports.unlockUser = async (req, res) => {
 module.exports.receiveReport = async (req, res) => {
   try {
     const { movieId, fileName, videoUrl } = req.body;
-    if(!movieId || !fileName || !videoUrl) {
+    if (!movieId || !fileName || !videoUrl) {
       res.status(404).send("Invalid!");
     }
     const userReport = new Report({

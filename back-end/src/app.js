@@ -17,40 +17,39 @@ const database = require("../config/connect");
 const router = require("./api/v1/routes/index.route");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
-database.connect();
-
-app.use(morgan("dev"));
-app.use(cors({
+const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
-}));
-app.options("*", cors());
+};
+const sessionOptions = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URL,
+  }),
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 15 * 60 * 1000,
+    sameSite: "none",
+    path: "/",
+  },
+};
+database.connect();
+
+app.use(morgan("dev"));
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
 app.use(methodOverride("_method"));
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URL,
-    }),
-    cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 15 * 60 * 1000, // 15 minutes
-    },
-  })
-);
-
+app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.set("socketio", io);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
