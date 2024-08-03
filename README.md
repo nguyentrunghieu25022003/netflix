@@ -26,13 +26,16 @@ A Netflix clone built with Node.js for the backend and React.js for the frontend
 - Express.js
 - MongoDB
 - Mongoose
-- JWT for Authentication
-
+- JWT for Authentication (Refresh Token)
+- Passport
+- Socket.IO
+- Cors
 ### Frontend
 - React.js
 - Axios
 - CSS Modules
-
+- Bootstrap
+- Socket.IO-Client
 ## Installation
 
 1. **Clone the repository:**
