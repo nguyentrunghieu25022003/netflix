@@ -6,20 +6,29 @@ import AdminLayoutNoLogin from "./layouts/admin-layout-no-login";
 import useAuthToken from "./utils/auth";
 import setupAutoRefresh from "./utils/refresh-token";
 import { useEffect } from "react";
+import HandleReloading from "./utils/navigation";
+import LoadingPage from "./containers/loading/loading";
 
 function App() {
-  const { userToken } = useAuthToken();
+  const { userToken, isLoading } = useAuthToken();
 
   useEffect(() => {
-    if (userToken && userToken !== "undefined") {
+    if (userToken && userToken !== undefined) {
       setupAutoRefresh();
       console.log("User token is set, auto refresh setup");
     }
   }, [userToken]);
 
+  if(isLoading) {
+    return (
+      <LoadingPage />
+    );
+  }
+
   return (
     <Router>
       <div className="App">
+        <HandleReloading />
         <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component;

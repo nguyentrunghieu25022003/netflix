@@ -15,7 +15,7 @@ module.exports.getAllThumbnails = async (req, res) => {
     const movies = await MainModel.find({});
     res.json(movies);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -32,7 +32,7 @@ module.exports.getAllCategories = async (req, res) => {
     });
     res.json(categories);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -49,7 +49,7 @@ module.exports.getAllCountries = async (req, res) => {
     });
     res.json(countries);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -63,7 +63,7 @@ module.exports.handleSearchResult = async (req, res) => {
     const results = await MainModel.find(find);
     res.json(results);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -99,7 +99,7 @@ module.exports.searchFilms = async (req, res) => {
       totalPagesSearch: totalPagesSearch,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -142,7 +142,7 @@ module.exports.getAllMovies = async (req, res) => {
       currentPage: objectPagination.currentPage,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -185,7 +185,7 @@ module.exports.getAllSeries = async (req, res) => {
       currentPage: objectPagination.currentPage,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -228,7 +228,7 @@ module.exports.getAllFeatureFilms = async (req, res) => {
       currentPage: objectPagination.currentPage,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -271,7 +271,7 @@ module.exports.getAllTVShows = async (req, res) => {
       currentPage: objectPagination.currentPage,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -314,7 +314,7 @@ module.exports.getAllAnimatedMovies = async (req, res) => {
       currentPage: objectPagination.currentPage,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -329,7 +329,7 @@ module.exports.getAllMyList = async (req, res) => {
       myList: myList || [],
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -342,14 +342,12 @@ module.exports.addMovieToMyList = async (req, res) => {
     if (!myList) {
       myList = new MyList({ userId: user._id, movie: [] });
     }
-
     const existingIndex = myList.movie.findIndex((m) => m.slug === movieSlug);
     if (existingIndex !== -1) {
       myList.movie.splice(existingIndex, 1);
       await myList.save();
       return res.json({ message: "Movie removed from your list" });
     }
-
     const newMovie = {
       _id: movieData._doc.movie._doc._id,
       name: movieData._doc.movie._doc.name,
@@ -408,8 +406,7 @@ module.exports.addMovieToMyList = async (req, res) => {
     await notification.save();
     res.json(myList);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -426,8 +423,7 @@ module.exports.removeFromMyList = async (req, res) => {
     }
     res.json({ message: "Successfully removed movies!" });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -450,8 +446,7 @@ module.exports.createComment = async (req, res) => {
       user: userEmail,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error" });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -463,7 +458,7 @@ module.exports.removeComment = async (req, res) => {
     const comments = (await Comment.find({ movieId: movie._id })) || [];
     res.json(comments);
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -478,7 +473,7 @@ module.exports.getRanking = async (req, res) => {
     });
     res.json(ranking);
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -561,8 +556,7 @@ module.exports.handleStatusVideo = async (req, res) => {
     }
     res.json({ message: "Success" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error processing your request" });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -618,8 +612,7 @@ module.exports.getMovieDetailsWithComments = async (req, res) => {
 
     res.json(response);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -629,8 +622,7 @@ module.exports.getNotifications = async (req, res) => {
     const notifications = await Notification.findOne({ userId: userId });
     res.json(notifications);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -649,7 +641,6 @@ module.exports.handleNotifications = async (req, res) => {
     }
     res.json({ message: "Success !" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };

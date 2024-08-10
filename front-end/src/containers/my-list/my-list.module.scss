@@ -15,7 +15,7 @@
 
 #custom {
     display: flex;
-    margin-left: 15px !important;
+    
     button {
         width: 150px;
         min-height: 48px;
@@ -93,6 +93,14 @@ input[type="checkbox"]:checked {
     }
 }
 
-#btn-group {
-    margin: 30px 0 0 15px;
+#btn-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    #btn-group {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 }

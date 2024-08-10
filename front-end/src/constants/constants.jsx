@@ -170,6 +170,10 @@ export const countryObjects = [
     key: "singapore",
     value: "Singapore",
   },
+  {
+    key: "nam-phi",
+    value: "South Africa",
+  },
 ];
 
 export const dataCategory = [
@@ -324,6 +328,6 @@ export const dataCountry = [
   {
     key: "3cf479dac2caaead12dfa36105b1c402",
     slug: "nam-phi",
-    name: "South Africa",
+    name: "Nam Phi",
   },
 ];

@@ -381,7 +381,6 @@ export const fetchAllResult = async (keyword) => {
   }
 };
 
-
 const sanitizeAndFormatString = (str) => {
   return str.split(" ").join("");
 };

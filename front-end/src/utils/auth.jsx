@@ -3,6 +3,7 @@ import axios from "axios";
 
 const useAuthToken = () => {
   const [userToken, setUserToken] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -12,16 +13,18 @@ const useAuthToken = () => {
         });
         if (response.status === 200) {
           setUserToken(true);
+          setIsLoading(false);
         }
       } catch (error) {
         setUserToken(false);
+        setIsLoading(false);
       }
     };
 
     checkAuthToken();
   }, []);
 
-  return { userToken };
+  return { userToken, isLoading };
 };
 
 export default useAuthToken;

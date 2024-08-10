@@ -105,6 +105,7 @@ const Header = () => {
         },
         options
       );
+      
       if (response.status === 200) {
         console.log("Handle successful!");
         setNotifications((prevNotifications) =>
@@ -134,7 +135,7 @@ const Header = () => {
     setTimeout(() => {
       localStorage.removeItem("user");
       window.location.reload();
-    }, 3000)
+    }, 2000)
   };
 
   const isActive = (path) => location.pathname.includes(path);
@@ -282,30 +283,34 @@ const Header = () => {
             </ul>
             <div className="d-flex justify-content-between align-items-center gap-4">
               <form onSubmit={handleSearch} className={cx("search-box")}>
-                {searchClick && (
+                { searchClick && (
                   <Tippy
                     interactive={true}
                     placement="bottom"
                     trigger="click"
                     content={(<div className={cx("search-area")}>
-                      <div className={cx("search-result")}>
+                      { keyword.length > 0 && <div className={cx("search-result")}>
                         {isLoading && <img src="/assets/imgs/kOnzy.gif" alt="Error" /> }
                         { results.map((item, index) => {
                           return (
-                            <div key={index} className={cx("trending-item")}>
-                              <h6>{item.movie.origin_name} ({item.movie.year})</h6>
-                            </div>
+                            <Link key={index} to={`/movie/detail/${item.movie.slug}/tap-1`} onClick={() => setSearchClick(!searchClick)}>
+                              <div className={cx("trending-item")}>
+                                <h6>{item.movie.origin_name} ({item.movie.year})</h6>
+                              </div>
+                            </Link>
                           );
                         }) }
-                      </div>
+                      </div> }
                       <div className={cx("search-trending")}>
                         <h5>Trending <MovingIcon className={cx("icon")} /></h5>
                         {movies.map((item, index) => {
                           return (
-                            <div key={index} className={cx("trending-item")}>
-                              <h6>{item.movie.origin_name} ({item.movie.year})</h6>
-                            </div>
-                          )
+                            <Link key={index} to={`/movie/detail/${item.movie.slug}/tap-1`} onClick={() => setSearchClick(!searchClick)}>
+                              <div className={cx("trending-item")}>
+                                <h6>{item.movie.origin_name} ({item.movie.year})</h6>
+                              </div>
+                            </Link>
+                          );
                         })}
                       </div>
                     </div>)}
@@ -328,6 +333,7 @@ const Header = () => {
                 </button>
               </form>
               <Tippy
+                arrow={false}
                 interactive={true}
                 placement="bottom"
                 delay={300}
@@ -429,9 +435,10 @@ const Header = () => {
               </div>
               <div className={cx("account")}>
                 <Tippy
+                  arrow={false}
                   interactive={true}
                   placement="bottom"
-                  delay={500}
+                  delay={300}
                   duration={200}
                   className={cx("custom")}
                   content={

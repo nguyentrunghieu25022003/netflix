@@ -15,7 +15,7 @@ import { useNotifications } from "../../components/socket/socket";
 import { fetchAllNotifications } from "../../api/index";
 import Loading from "../../components/loading/loading";
 import ReportIcon from "@mui/icons-material/Report";
-import { genreObjects } from "../../constants/constants";
+import { genreObjects, countryObjects } from "../../constants/constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -32,6 +32,7 @@ const Detail = () => {
     fileName: "",
     views: 0,
     categories: [],
+    countries: [],
     comments: [],
     commentValue: "",
     idComment: "",
@@ -86,6 +87,7 @@ const Detail = () => {
         fileName: episodes[currentIndexData.currentIndex - 1].filename,
         views: movie.view,
         categories: movie.category,
+        countries: movie.country,
         comments,
         userEmail: user,
         status: status,
@@ -318,13 +320,17 @@ const Detail = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const replace = (mySlug) => {
     let myString = "";
     const genreObject = genreObjects.find((genre) => genre.key === mySlug);
+    const countryObject = countryObjects.find((country) => country.key === mySlug);
     if(genreObject) {
       myString = genreObject.value;
+    }
+    if(countryObject) {
+      myString = countryObject.value;
     }
     return myString;
   };
@@ -434,10 +440,22 @@ const Detail = () => {
               <strong>{ movieData.totalScore === 0 ? "(No reviews)" : `(${Math.round(movieData.totalScore * 100) / 100} score)`}</strong>
             </div>
             <div className={cx("categories")}>
+              <span>Genre: </span>
               {movieData.categories.map((item) => (
                 <Link
                   key={item.id}
                   to={`/?genre=${encodeURIComponent(item.slug)}`}
+                >
+                  <strong>{replace(item.slug)}</strong>
+                </Link>
+              ))}
+            </div>
+            <div className={cx("countries")} >
+              <span>Country: </span>
+              {movieData.countries.map((item) => (
+                <Link
+                  key={item.id}
+                  to={`/?country=${encodeURIComponent(item.slug)}`}
                 >
                   <strong>{replace(item.slug)}</strong>
                 </Link>

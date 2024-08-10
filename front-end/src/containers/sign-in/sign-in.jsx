@@ -46,7 +46,7 @@ const Login = () => {
         });
         setTimeout(() => {
           window.location.href = "/";
-        }, 3000);
+        }, 2000);
       } else {
         setUserData((prev) => ({
           ...prev,

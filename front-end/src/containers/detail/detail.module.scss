@@ -143,23 +143,40 @@
     }
 }
 
-.categories {
+.categories,
+.countries {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    align-items: center;
+    margin-top: 20px;
+
+    span {
+        width: 70px;
+        font-size: 1.7rem;
+        font-weight: 400;
+        line-height: 1.7;
+        color: var(--white-color);
+    }
 
     a {
         text-decoration: none;
     }
 
     strong {
-        font-size: 1.7rem;
+        display: block;
+        min-width: 150px;
+        text-align: center;
+        font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.7;
         color: var(--white-color);
-        display: block;
         background-color: #24252B;
-        padding: 0 10px;
+        padding: 2px 0;
+        border-radius: 4px;
+
+        &:hover {
+            color: var(--text-color);
+        }
     }
 }
 

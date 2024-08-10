@@ -65,6 +65,19 @@ const Profile = () => {
         event.target.src = profile.avatar;
     };
 
+    const formatDate = (myDate) => {
+      const date = new Date(myDate);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+      const formattedDate = date.toLocaleDateString("en-US", options);
+      return formattedDate;
+    };
+
     if(isLoading) {
         return <Loading />;
     }
@@ -89,6 +102,8 @@ const Profile = () => {
                             <span className={cx("profile-text")}>
                                 <input ref={emailInputRef} type="text" value={state.email} disabled className={cx("profile-input")} />
                             </span>
+                            <span className={cx("profile-status")}>Status: <button>{ profile.isLocked ? "Lock" : "Unlock" }</button></span>
+                            <span className={cx("profile-create-at")}>Create at {formatDate(profile.createAt)}</span>
                             <form className={cx("d-flex gap-4 mt-5")} onSubmit={handleEdit}>
                                 <button className={cx("btn-cancel")} onClick={cancelEdit} type="button">Cancel</button>
                                 <button className={cx("btn-save")} type="submit">Save</button>

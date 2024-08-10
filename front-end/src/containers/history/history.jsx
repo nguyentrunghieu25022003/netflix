@@ -56,7 +56,7 @@ const UserHistory = () => {
           </div>
         </div>
         {histories.length > 0 ? (
-          <div className={cx("row")} id={cx("my-history")}>
+          <div className={cx("row")}>
             {histories.map((item, index) => (
               <div key={index} className="col-3 mt-5 p-5">
                 <div className="row">

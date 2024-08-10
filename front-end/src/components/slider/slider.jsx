@@ -9,7 +9,6 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import AddIcon from "@mui/icons-material/Add";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import Cookies from "js-cookie";
 import { useNotifications } from "../socket/socket";
 import { fetchAllNotifications } from "../../api";
 
@@ -26,12 +25,11 @@ const ImageSlider = ({ images }) => {
   });
   const playerRef = useRef(null);
   const { slug } = useParams();
-  const email = Cookies.get("email");
-  const token = Cookies.get("token");
+  const userFromStorage = localStorage.getItem("user");
+  const userObject = JSON.parse(userFromStorage);
+  const email = userObject?.email;
   const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    withCredentials: true,
   };
 
   const handleVideoEnded = () => {

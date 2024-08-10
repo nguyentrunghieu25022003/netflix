@@ -156,8 +156,10 @@
     color: var(--white-color);
 }
 
-.btn-group {
-    margin-left: 15px;
+.btn-group { 
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
     .btn-click {
         &:hover {

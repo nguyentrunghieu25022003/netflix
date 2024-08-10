@@ -22,7 +22,7 @@ module.exports.getUserProfile = async (req, res) => {
     const user = await User.findOne({ _id: userId });
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Error get profile user", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -79,7 +79,7 @@ module.exports.handleLoginSuccess = async (req, res) => {
     }
     res.json({ message: "Login success !" });
   } catch (err) {
-    res.status(500).json({ message: "Error: " + err.message });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -102,7 +102,7 @@ module.exports.editUserProfile = async (req, res) => {
       res.status(400).json({ message: "No valid fields to update" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error get profile user", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -124,7 +124,7 @@ module.exports.userRegister = async (req, res) => {
     const users = await User({});
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -151,7 +151,7 @@ module.exports.userLogin = async (req, res) => {
     await newToken.save();
     res.cookie(user.role === "user" ? "userToken" : "adminToken", token, {
       httpOnly: true,
-      expires: new Date(Date.now() + 15 * 60 * 1000),
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
       path: "/",
@@ -162,7 +162,7 @@ module.exports.userLogin = async (req, res) => {
       res.json({ message: "Success !", user: user });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error login user", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -181,7 +181,7 @@ module.exports.checkToken = async (req, res) => {
     }
     res.json({ message: "Success" });
   } catch (error) {
-    res.status(500).json({ message: "Error", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -217,7 +217,7 @@ module.exports.releaseAccessToken = async (req, res) => {
       }
     );
   } catch (error) {
-    res.status(500).json({ message: "Error", error });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -243,7 +243,7 @@ module.exports.userLogout = async (req, res) => {
     res.clearCookie(user.role === "user" ? "userToken" : "adminToken");
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    res.status(500).json({ message: "Error logout!" });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -286,8 +286,7 @@ module.exports.handleFeedback = async (req, res) => {
     await transporter.sendMail(userMailOptions);
     res.json({ message: "Success !" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error fetching from the database." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -317,7 +316,7 @@ module.exports.handleForgotPassword = async (req, res) => {
     await transporter.sendMail(userMailOptions);
     res.json({ message: "Success" });
   } catch (err) {
-    res.status(500).json({ message: "Error handle !." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -331,7 +330,7 @@ module.exports.userConfirm = async (req, res) => {
     await ConfirmCode.findOneAndUpdate({ code: code }, { status: true });
     res.json({ message: "Success" });
   } catch (err) {
-    res.status(500).json({ message: "Error handle !." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -346,7 +345,7 @@ module.exports.resetPassword = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { password: hashedPassword });
     res.json({ message: "Success" });
   } catch (err) {
-    res.status(500).json({ message: "Error handle !." });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -356,7 +355,7 @@ module.exports.getHistory = async (req, res) => {
     const histories = await History.findOne({ userId });
     res.json(histories);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).send("Message: " + err.message);
   }
 };
 
@@ -403,6 +402,6 @@ module.exports.updateHistory = async (req, res) => {
     await history.save();
     res.json({ message: "History updated successfully!" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).send("Message: " + err.message);
   }
 };

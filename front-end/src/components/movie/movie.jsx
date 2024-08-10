@@ -36,8 +36,10 @@ const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current =
         <Link to={`/movie/detail/${slug}/${episode}`}>
           <LazyLoadImage src={poster_url} effect="blur" alt="Error" />
           <PlayCircleIcon className={cx("icon")} style={{ fontSize: "50px" }} />
-          <h5 className={cx("movie-title")}>{origin_name} {`(${year})`}</h5>
-          { view !== '' && <strong className={cx("total-view")}><RemoveRedEyeIcon className={cx("view-icon")} />{view}</strong>}
+          <div className={cx("movie-desc")}>
+            <h5 className={cx("movie-title")}>{origin_name} {`(${year})`}</h5>
+            { view !== '' && <strong className={cx("total-view")}><RemoveRedEyeIcon className={cx("view-icon")} />{view}</strong>}
+          </div>
           <p className={cx("movie-status")}>{handleEpisode(episode_current)}</p>
         </Link>
     </div>

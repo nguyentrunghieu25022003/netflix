@@ -101,8 +101,8 @@ const MyList = () => {
             <h2>My List</h2>
           </div>
         </div>
-        <div className="row d-flex align-items-center mb-5">
-          <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-12" id={cx("custom")}>
+        <div className="row mb-5" id={cx("btn-list")}>
+          <div className="col-xxl-6 col-xl-6" id={cx("custom")}>
             <button style={{ backgroundColor: "#111319" }} onClick={handleSelectAll}>Select all</button>
             <button className={cx("btn-edit")} onClick={() => setState(prev => ({...prev, isActiveCheckbox: !prev.isActiveCheckbox}))}>Edit</button>
             <form onSubmit={handleSubmit}>
@@ -111,7 +111,7 @@ const MyList = () => {
               <button type="submit" className={cx("btn-delete")} >Delete</button>
             </form>
           </div>
-          <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-12 mr-4" id={cx("btn-group")}>
+          <div className="col-xxl-6 col-xl-6" id={cx("btn-group")}>
             <button className={cx("btn-click")} onClick={() => handlePageChange('prev')}>
               <ChevronLeftIcon className={cx("icon")} />
             </button>
