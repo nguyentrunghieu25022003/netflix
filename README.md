@@ -17,7 +17,12 @@ A Netflix clone built with Node.js for the backend and React.js for the frontend
 - Browse Movies and TV Shows
 - Watch Trailers and Movies
 - Add Movies to Favorites
-- Responsive Design
+- ...
+And many other features
+
+![image](https://github.com/user-attachments/assets/8f07d38a-ddb9-4ddd-a180-892c7043d8a1)
+![image](https://github.com/user-attachments/assets/387b89cc-8935-4742-a6b7-e7c98e6acd99)
+
 
 ## Technologies
 
@@ -26,9 +31,24 @@ A Netflix clone built with Node.js for the backend and React.js for the frontend
 - Express.js
 - MongoDB
 - Mongoose
-- JWT for Authentication
-
+- JWT for Authentication (Refresh Token)
+- Passport
+- Socket.IO
+- Cors
 ### Frontend
 - React.js
 - Axios
+<<<<<<< HEAD
 - CSS Modules
+=======
+- CSS Modules
+- Bootstrap
+- Socket.IO-Client
+## Installation
+
+1. **Clone the repository:**
+
+```sh
+git clone https://github.com/yourusername/netflix-clone.git
+cd netflix-clone
+>>>>>>> 943b4b8880c5eb180d7a77651c5d03ec7e5e8d0d
