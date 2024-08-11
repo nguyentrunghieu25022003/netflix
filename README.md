@@ -6,10 +6,6 @@ A Netflix clone built with Node.js for the backend and React.js for the frontend
 
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
