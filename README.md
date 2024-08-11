@@ -13,10 +13,12 @@ A Netflix clone built with Node.js for the backend and React.js for the frontend
 
 ## Features
 
-- User Authentication (Sign up, Login, Logout)
+- User Authentication (Sign up, Login, Login with Google, Logout)
 - Browse Movies and TV Shows
 - Watch Trailers and Movies
 - Add Movies to Favorites
+- Report
+- Like & Dislike
 - ...
 And many other features
 
@@ -38,17 +40,13 @@ And many other features
 ### Frontend
 - React.js
 - Axios
-<<<<<<< HEAD
-- CSS Modules
-=======
+- Chart.js
 - CSS Modules
 - Bootstrap
 - Socket.IO-Client
 ## Installation
 
 1. **Clone the repository:**
-
-```sh
 git clone https://github.com/yourusername/netflix-clone.git
 cd netflix-clone
->>>>>>> 943b4b8880c5eb180d7a77651c5d03ec7e5e8d0d
+npm start
