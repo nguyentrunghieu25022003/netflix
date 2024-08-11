@@ -122,7 +122,7 @@ const Header = () => {
   };
 
   const clearTokenCookie = () => {
-    toast(<strong className="fs-3">Logout successful!</strong> , {
+    toast.success(<strong className="fs-3">Logout successful!</strong> , {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

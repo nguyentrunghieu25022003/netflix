@@ -245,31 +245,11 @@ const Detail = () => {
         options
       );
       if (response.status === 200) {
-        toast.success(<strong className="fs-3">Added to list successfully</strong> , {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
         setMovieData(prev => ({...prev, isMyList: !prev.isMyList}));
         const notificationsResponse = await fetchAllNotifications(options);
         setNotifications(notificationsResponse.messages);
       }
     } catch (error) {
-      toast.error(<strong className="fs-3">Added to list failed</strong> , {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
       console.error("Registration error:", error.response);
     }
   }
@@ -341,30 +321,10 @@ const Detail = () => {
 
   const handleLiked = () => {
     handleRating("liked");
-    toast.success(<strong className="fs-3">You liked it</strong> , {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
   };
 
   const handleDisliked = () => {
     handleRating("disliked");
-    toast.success(<strong className="fs-3">You disliked it</strong> , {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
   };
 
   if(isLoading) {
