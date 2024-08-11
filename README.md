@@ -44,9 +44,3 @@ And many other features
 - CSS Modules
 - Bootstrap
 - Socket.IO-Client
-## Installation
-
-1. **Clone the repository:**
-git clone https://github.com/yourusername/netflix-clone.git
-cd netflix-clone
-npm start
