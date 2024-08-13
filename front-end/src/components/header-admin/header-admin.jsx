@@ -6,7 +6,7 @@ import useAuthToken from "../../utils/auth";
 const cx = classNames.bind(styles);
 
 const Header = () => {
-    const { adminToken } =useAuthToken();
+    const { userToken } =useAuthToken();
     const options = {
       withCredentials: true
     };
@@ -15,7 +15,7 @@ const Header = () => {
       event.preventDefault();
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/admin/auth/logout`,
+          `${import.meta.env.VITE_API_URL}/users/auth/logout`,
           options
         );
         if (response.status === 200) {
@@ -32,7 +32,7 @@ const Header = () => {
             <div className="container">
                 <div className="col-12 d-flex align-items-center justify-content-between">
                     <h2>Administrator</h2>
-                    { adminToken && <form className={cx("form-logout")} onSubmit={handleLogout}>
+                    { userToken && <form className={cx("form-logout")} onSubmit={handleLogout}>
                         <button type="submit" className={cx("log-out")}>
                             Log out
                         </button>
