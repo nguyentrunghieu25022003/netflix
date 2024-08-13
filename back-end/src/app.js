@@ -18,7 +18,7 @@ const router = require("./api/v1/routes/index.route");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "*",
+  origin: "*",
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
