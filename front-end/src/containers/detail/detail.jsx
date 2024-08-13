@@ -502,7 +502,7 @@ const Detail = () => {
                         }
                       >
                         <div className={cx("comment-item")}>
-                          <img src={`${import.meta.env.VITE_IMG_URL}${comment.avatarUrl}`} alt="Avatar" />
+                          <img src={`${import.meta.env.VITE_IMG_URL}${comment.avatarUrl}`} alt="Avatar" onError={handleImgError} />
                           <textarea
                             className={cx("text")}
                             value={comment.text}
