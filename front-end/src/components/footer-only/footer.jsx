@@ -13,7 +13,9 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-xxl-3 col-xl-3 col-md-3 col-12">
-            <p><Link to="">Questions? Contact us.</Link></p>
+            <p>
+              <Link to="">Questions? Contact us.</Link>
+            </p>
             <ul className={cx("footer-list")}>
               <li>
                 <Link to="">FAQ</Link>
@@ -31,7 +33,10 @@ const Footer = () => {
                 <Link>
                   <InstagramIcon className={cx("icon")} />
                 </Link>
-                <Link to="https://www.facebook.com/profile.php?id=100048019124907" target="blank">
+                <Link
+                  to="https://www.facebook.com/profile.php?id=100048019124907"
+                  target="blank"
+                >
                   <FacebookIcon className={cx("icon")} />
                 </Link>
                 <Link>
@@ -76,7 +81,13 @@ const Footer = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            <div className={cx("footer-desc")}><p>©2024 Netflix. This website was created by Nguyen Trung Hieu, a student majoring in Information Security at Ho Chi Minh City University of Industry and Trade</p></div>
+            <div className={cx("footer-desc")}>
+              <p>
+                ©2024 Netflix. This website was created by Nguyen Trung Hieu, a
+                student majoring in Information Security at Ho Chi Minh City
+                University of Industry and Trade
+              </p>
+            </div>
           </div>
         </div>
       </div>

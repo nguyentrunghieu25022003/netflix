@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
@@ -14,7 +14,6 @@ import { fetchAllNotifications } from "../../api";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const ImageSlider = ({ images }) => {
   const { setNotifications } = useNotifications();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -166,6 +165,22 @@ const ImageSlider = ({ images }) => {
       )}
     </div>
   );
+};
+
+ImageSlider.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      thumbUrl: PropTypes.string,
+      video: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      year: PropTypes.number,
+      quality: PropTypes.string,
+      lang: PropTypes.string,
+      content: PropTypes.string
+    })
+  ).isRequired
 };
 
 export default ImageSlider;

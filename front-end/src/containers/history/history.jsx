@@ -12,7 +12,7 @@ const UserHistory = () => {
   const [histories, setHistories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const options = {
-    withCredentials: true
+    withCredentials: true,
   };
 
   const getAllHistory = async () => {
@@ -40,7 +40,7 @@ const UserHistory = () => {
   useEffect(() => {
     setIsLoading(true);
     getAllHistory();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -62,21 +62,34 @@ const UserHistory = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className={cx("movie-img")}>
-                      <LazyLoadImage src={item.poster_url} effect="blur" alt={item.origin_name} />
+                      <LazyLoadImage
+                        src={item.poster_url}
+                        effect="blur"
+                        alt={item.origin_name}
+                      />
                     </div>
                   </div>
                   <div className="col-12">
                     <div className={cx("movie-desc")}>
-                      <h5 className={cx("movie-title")}>{item.origin_name} {`(${item.year})`}</h5>
-                      <strong className="mt-3">Current Episode: <button>{item.episode}</button></strong>
-                      <strong className="mt-2">Time: {handleEpisode(item.time)}</strong>
+                      <h5 className={cx("movie-title")}>
+                        {item.origin_name} {`(${item.year})`}
+                      </h5>
+                      <strong className="mt-3">
+                        Current Episode: <button>{item.episode}</button>
+                      </strong>
+                      <strong className="mt-2">
+                        Time: {handleEpisode(item.time)}
+                      </strong>
                       <Link
                         className={cx("btn-play")}
                         to={`/movie/detail/${item.slug}/tap-${item.episode}`}
                         onClick={() => {
                           localStorage.setItem(
                             "currentIndexData",
-                            JSON.stringify({ key: item.slug, currentIndex: item.episode })
+                            JSON.stringify({
+                              key: item.slug,
+                              currentIndex: item.episode,
+                            })
                           );
                         }}
                       >
@@ -91,7 +104,9 @@ const UserHistory = () => {
         ) : (
           <div className="row">
             <div className="col-12">
-              <strong className={cx("no-history")}>You have not watched any movies yet.</strong>
+              <strong className={cx("no-history")}>
+                You have not watched any movies yet.
+              </strong>
             </div>
           </div>
         )}

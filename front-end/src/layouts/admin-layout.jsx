@@ -1,7 +1,7 @@
+import PropTypes from "prop-types";
 import Header from "../components/header-admin/header-admin";
 import Sidebar from "../components/sidebar/sidebar";
 
-// eslint-disable-next-line react/prop-types
 const AdminLayout = ({ children }) => {
     return (
         <div style={{ backgroundColor: "var(--black-color)" }}>
@@ -18,6 +18,10 @@ const AdminLayout = ({ children }) => {
             </div>
         </div>
     );
-}
+};
+
+AdminLayout.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default AdminLayout;

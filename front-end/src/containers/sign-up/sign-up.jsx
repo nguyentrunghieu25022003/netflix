@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import classNames from "classnames/bind";
 import styles from "./sign-up.module.scss";
 import axios from "axios";
@@ -14,7 +13,7 @@ const Register = () => {
     name: "",
     email: sessionStorage.getItem("email") || "",
     password: "",
-    status: false
+    status: false,
   });
 
   const handleSubmit = async (event) => {
@@ -37,10 +36,10 @@ const Register = () => {
           },
         }
       );
-      if(response.status !== 200) {
+      if (response.status !== 200) {
         setUserData((prev) => ({
           ...prev,
-          status: true
+          status: true,
         }));
         return;
       }
@@ -48,7 +47,7 @@ const Register = () => {
     } catch (error) {
       setUserData((prev) => ({
         ...prev,
-        status: true
+        status: true,
       }));
       console.error("Registration error:", error.response);
     }
@@ -144,7 +143,11 @@ const Register = () => {
                       Password must be more than 6 characters
                     </strong>
                   )}
-                  { userData.status && <strong className={cx("warning")}>Unable to sign up, please check again</strong> }
+                  {userData.status && (
+                    <strong className={cx("warning")}>
+                      Unable to sign up, please check again
+                    </strong>
+                  )}
                 </div>
                 <button type="submit" className={cx("sign-up")}>
                   Sign Up

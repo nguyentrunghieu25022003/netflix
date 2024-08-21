@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import Hero from "../containers/home/sections/hero";
 
-// eslint-disable-next-line react/prop-types
 const DefaultLayout = ({ children }) => {
   return (
     <>
@@ -21,6 +21,10 @@ const DefaultLayout = ({ children }) => {
       <Footer />
     </>
   );
+};
+
+DefaultLayout.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default DefaultLayout;

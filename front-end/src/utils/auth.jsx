@@ -4,7 +4,6 @@ import axios from "axios";
 const useAuthToken = () => {
   const [userToken, setUserToken] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -20,7 +19,6 @@ const useAuthToken = () => {
         setIsLoading(false);
       }
     };
-
     checkAuthToken();
   }, []);
 

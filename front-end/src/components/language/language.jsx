@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 const Languages = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [language, setLanguage] = useState("English");
-  
+
   return (
     <div className={cx("language-box")}>
       <div

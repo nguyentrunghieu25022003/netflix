@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 
-// eslint-disable-next-line react/prop-types
 const StarRating = ({ rating, totalStars }) => {
   if (rating === 0) {
     return (
@@ -39,6 +39,11 @@ const StarRating = ({ rating, totalStars }) => {
         ))}
     </div>
   );
+};
+
+StarRating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  totalStars: PropTypes.number.isRequired,
 };
 
 export default StarRating;

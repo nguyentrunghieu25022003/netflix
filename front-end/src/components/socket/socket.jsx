@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { fetchAllNotifications } from "../../api/index";
@@ -8,7 +9,6 @@ const NotificationContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
 export const useNotifications = () => useContext(NotificationContext);
 
-// eslint-disable-next-line react/prop-types
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const options = {
@@ -54,4 +54,8 @@ export const NotificationProvider = ({ children }) => {
       {children}
     </NotificationContext.Provider>
   );
+};
+
+NotificationProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

@@ -13,9 +13,8 @@ const refreshAccessToken = async () => {
   }
 };
 
-const setupAutoRefresh = (interval = 14 * 60 * 1000) => {
+const setupAutoRefresh = (interval = 23 * 60 * 60 * 1000) => {
   refreshAccessToken();
-  
   setInterval(() => {
     refreshAccessToken();
   }, interval); 

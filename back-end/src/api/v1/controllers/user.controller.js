@@ -6,10 +6,7 @@ const ConfirmCode = require("../../../models/confirm-code.model");
 const Feedback = require("../../../models/feedback.model");
 const History = require("../../../models/history.model");
 const Token = require("../../../models/refresh-token.model");
-const {
-  createAccessToken,
-  createRefreshToken,
-} = require("../../../middlewares/jwt");
+const { createAccessToken, createRefreshToken } = require("../../../middlewares/jwt");
 const mailOptions = require("../../../helper/mail");
 const createRandomFourDigit = require("../../../helper/confirm");
 const nodemailer = require("nodemailer");
@@ -194,18 +191,12 @@ module.exports.releaseAccessToken = async (req, res) => {
     }
     const refreshToken = refreshTokenDoc.token;
     const user = await User.findById(userId);
-    jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_SECRET,
-      async (err, decoded) => {
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
         if (err) {
           return res.status(403).json({ message: "Invalid refresh token!" });
         }
         const newAccessToken = createAccessToken(decoded.userId);
-        res.cookie(
-          user.role === "user" ? "userToken" : "adminToken",
-          newAccessToken,
-          {
+        res.cookie(user.role === "user" ? "userToken" : "adminToken", newAccessToken, {
             httpOnly: true,
             expires: new Date(Date.now() + 15 * 60 * 1000),
             secure: process.env.NODE_ENV === "production",

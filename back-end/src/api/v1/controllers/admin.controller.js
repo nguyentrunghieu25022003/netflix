@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const MainModel = require("../../../models/movie.model");
 const User = require("../../../models/user.model");
@@ -52,9 +51,7 @@ module.exports.addMovie = async (req, res) => {
       episodes,
     } = req.body;
     const convertActor = String(actor).split(",");
-    const convertEpisodesObject = String(episodes)
-      .split(",")
-      .map((episode) => {
+    const convertEpisodesObject = String(episodes).split(",").map((episode) => {
         const arr = episode.split("|");
         return {
           name: arr[0],
@@ -147,18 +144,15 @@ module.exports.handleEditMovie = async (req, res) => {
     objectInArray.forEach(([key, value]) => {
       movieItem.push({ key, value });
     });
-
     const movieUpdate = {};
     movieItem.forEach((item) => {
       if (item.value !== "") {
         movieUpdate[item.key] = item.value;
       }
     });
-
     if (Object.keys(movieUpdate).length === 0) {
       return res.status(401).send("Invalid !");
     }
-
     res.json({ message: "Success " });
   } catch (err) {
     res.status(500).send("Message: " + err.message);

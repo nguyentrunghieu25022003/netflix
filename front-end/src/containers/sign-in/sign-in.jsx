@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import classNames from "classnames/bind";
 import styles from "./sign-in.module.scss";
 import { useState } from "react";
@@ -34,7 +33,7 @@ const Login = () => {
       );
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        toast(<strong className="fs-3">Login successful!</strong> , {
+        toast(<strong className="fs-3">Login successful!</strong>, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -163,7 +162,7 @@ const Login = () => {
                 </div>
                 <div className={cx("more")}>
                   <p>
-                    This page is protected by Google reCAPTCHA to ensure you're
+                    This page is protected by Google reCAPTCHA to ensure you are
                     not a bot.
                   </p>
                   {!userData.moreActive ? (

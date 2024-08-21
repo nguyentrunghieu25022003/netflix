@@ -1,6 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./header.module.scss";
 import axios from "axios";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -466,10 +468,11 @@ const Header = () => {
                   }
                 >
                   <div className={cx("user-account")}>
-                    <img
+                    <LazyLoadImage
                       src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
                       className={cx("avatar")}
                       alt="avatar"
+                      effect="blur"
                       onError={handleImgError}
                     />
                     <ArrowDropDownIcon className={cx("header-icon")} />

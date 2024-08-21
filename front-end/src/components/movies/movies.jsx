@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import styles from "./movies.module.scss";
 import queryString from "query-string";
@@ -11,7 +12,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const Movies = ({ fetchAllMovies, title }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -177,6 +177,11 @@ const Movies = ({ fetchAllMovies, title }) => {
       )}
     </div>
   );
+};
+
+Movies.propTypes = {
+  fetchAllMovies: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default Movies;

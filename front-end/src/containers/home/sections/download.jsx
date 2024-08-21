@@ -10,15 +10,19 @@ const Download = () => {
         <div className="row">
           <div className="col-6">
             <div className={cx("download-left")}>
-                <img src={"/assets/imgs/mobile-0819.jpg"} alt="Error" />
-                <div className={cx("download-box")}>
-                    <img src={"/assets/imgs/boxshot.png"} alt="Error" width={60}/>
-                    <div className={cx("download-desc")}>
-                        <h5>Stranger Things</h5>
-                        <strong>Downloading...</strong>
-                    </div>
-                    <img src={"/assets/imgs/download-icon.gif"} alt="Error" width={40} />
+              <img src={"/assets/imgs/mobile-0819.jpg"} alt="Error" />
+              <div className={cx("download-box")}>
+                <img src={"/assets/imgs/boxshot.png"} alt="Error" width={60} />
+                <div className={cx("download-desc")}>
+                  <h5>Stranger Things</h5>
+                  <strong>Downloading...</strong>
                 </div>
+                <img
+                  src={"/assets/imgs/download-icon.gif"}
+                  alt="Error"
+                  width={40}
+                />
+              </div>
             </div>
           </div>
           <div className="col-6">

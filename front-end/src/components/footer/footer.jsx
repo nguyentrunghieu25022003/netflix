@@ -11,7 +11,9 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-3">
-            <p><Link to="">Questions? Contact us.</Link></p>
+            <p>
+              <Link to="">Questions? Contact us.</Link>
+            </p>
             <ul className={cx("footer-list")}>
               <li>
                 <Link to="">FAQ</Link>
@@ -28,9 +30,7 @@ const Footer = () => {
               <li>
                 <Languages />
               </li>
-              <li>
-                Netflix Vietnam
-              </li>
+              <li>Netflix Vietnam</li>
             </ul>
           </div>
           <div className="col-3">

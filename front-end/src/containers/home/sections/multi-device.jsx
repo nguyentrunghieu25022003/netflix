@@ -21,7 +21,10 @@ const MultiDevice = () => {
             <div className={cx("device-right")}>
               <img src={"/assets/imgs/tv.png"} alt="Error" />
               <video autoPlay muted loop width={465}>
-                <source src={"/assets/videos/video-tv-0819.m4v"} type="video/mp4" />
+                <source
+                  src={"/assets/videos/video-tv-0819.m4v"}
+                  type="video/mp4"
+                />
               </video>
             </div>
           </div>

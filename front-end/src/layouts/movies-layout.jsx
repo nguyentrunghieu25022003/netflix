@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Header from "../components/header-only/header";
 import Footer from "../components/footer-only/footer";
 import Ranking from "../components/ranking/ranking";
@@ -6,13 +7,13 @@ import { fetchAllThumbnails } from "../api/index";
 import { useEffect, useState } from "react";
 import ImageSlider from "../components/slider/slider";
 
-// eslint-disable-next-line react/prop-types
 const MoviesLayout = ({ children }) => {
     const [slider, setSlider] = useState([]);
 
     useEffect(() => {
-      fetchAllThumbnails()
-        .then((response) => {
+      const handleFetchAllThumbnails = async () => {
+        try {
+          const response = await fetchAllThumbnails();
           const movies = response.map((item) => ({
             thumbUrl: item.movie.thumb_url,
             slug: item.movie.slug,
@@ -25,8 +26,11 @@ const MoviesLayout = ({ children }) => {
             type: item.movie.type
           }));
           setSlider(movies);
-        })
-        .catch((error) => console.error("Error fetching movies:", error));
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      handleFetchAllThumbnails();
     }, []);
 
     return (
@@ -40,7 +44,11 @@ const MoviesLayout = ({ children }) => {
             <Thank />
             <Footer />
         </div>
-    )
-}
+    );
+};
+
+MoviesLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default MoviesLayout;

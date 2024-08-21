@@ -1,4 +1,3 @@
-/* eslint-disable react/no-children-prop */
 import classNames from "classnames/bind";
 import styles from "./my-list.module.scss";
 import { useEffect, useState } from "react";
@@ -20,19 +19,18 @@ const MyList = () => {
     isLoading: false,
   });
   const options = {
-    withCredentials: true
+    withCredentials: true,
   };
   const userFromStorage = localStorage.getItem("user");
   const userObject = JSON.parse(userFromStorage);
   const email = userObject.email;
-  
 
   useEffect(() => {
-    setState(prev => ({ ...prev, isLoading: true }));
+    setState((prev) => ({ ...prev, isLoading: true }));
     fetchAllMyList(options)
       .then((response) => {
         const movies = response.myList?.movie || [];
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           movies: movies,
           checkMovies: movies.length === 0,
@@ -41,9 +39,9 @@ const MyList = () => {
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
-        setState(prev => ({ ...prev, isLoading: false, checkMovies: true }));
+        setState((prev) => ({ ...prev, isLoading: false, checkMovies: true }));
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (state.isLoading) {
@@ -52,7 +50,7 @@ const MyList = () => {
 
   const handleSelectAll = () => {
     const inputList = document.querySelectorAll(".form-check-input");
-    inputList.forEach(input => {
+    inputList.forEach((input) => {
       input.checked = true;
     });
   };
@@ -60,16 +58,21 @@ const MyList = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const inputList = document.querySelectorAll(".form-check-input:checked");
-    const checkedValue = Array.from(inputList).map(input => input.value);
+    const checkedValue = Array.from(inputList).map((input) => input.value);
     const formData = {
       email: email,
-      movies: checkedValue
+      movies: checkedValue,
     };
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/movies/my-list/delete`, { data: formData, ...options });
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/movies/my-list/delete`,
+        { data: formData, ...options }
+      );
       if (response.status === 200) {
-        const updatedMovies = state.movies.filter(movie => !checkedValue.includes(movie._id));
-        setState(prev => ({ ...prev, movies: updatedMovies }));
+        const updatedMovies = state.movies.filter(
+          (movie) => !checkedValue.includes(movie._id)
+        );
+        setState((prev) => ({ ...prev, movies: updatedMovies }));
       }
     } catch (error) {
       console.error("Error during deletion:", error.response);
@@ -77,10 +80,10 @@ const MyList = () => {
   };
 
   const handlePageChange = (direction) => {
-    setState(prev => {
+    setState((prev) => {
       const totalPages = Math.ceil(prev.movies.length / 8);
       let newIndex = prev.currentIndex;
-      if (direction === 'prev') {
+      if (direction === "prev") {
         newIndex = newIndex > 1 ? newIndex - 1 : totalPages;
       } else {
         newIndex = newIndex < totalPages ? newIndex + 1 : 1;
@@ -103,19 +106,42 @@ const MyList = () => {
         </div>
         <div className="row mb-5" id={cx("btn-list")}>
           <div className="col-xxl-6 col-xl-6" id={cx("custom")}>
-            <button style={{ backgroundColor: "#111319" }} onClick={handleSelectAll}>Select all</button>
-            <button className={cx("btn-edit")} onClick={() => setState(prev => ({...prev, isActiveCheckbox: !prev.isActiveCheckbox}))}>Edit</button>
+            <button
+              style={{ backgroundColor: "#111319" }}
+              onClick={handleSelectAll}
+            >
+              Select all
+            </button>
+            <button
+              className={cx("btn-edit")}
+              onClick={() =>
+                setState((prev) => ({
+                  ...prev,
+                  isActiveCheckbox: !prev.isActiveCheckbox,
+                }))
+              }
+            >
+              Edit
+            </button>
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="email" value={email} />
               <input type="hidden" name="movies" value="" />
-              <button type="submit" className={cx("btn-delete")} >Delete</button>
+              <button type="submit" className={cx("btn-delete")}>
+                Delete
+              </button>
             </form>
           </div>
           <div className="col-xxl-6 col-xl-6" id={cx("btn-group")}>
-            <button className={cx("btn-click")} onClick={() => handlePageChange('prev')}>
+            <button
+              className={cx("btn-click")}
+              onClick={() => handlePageChange("prev")}
+            >
               <ChevronLeftIcon className={cx("icon")} />
             </button>
-            <button className={cx("btn-click")} onClick={() => handlePageChange('next')}>
+            <button
+              className={cx("btn-click")}
+              onClick={() => handlePageChange("next")}
+            >
               <ChevronRightIcon className={cx("icon")} />
             </button>
           </div>
@@ -127,11 +153,28 @@ const MyList = () => {
             </strong>
           ) : (
             <div className="row pt-3">
-              {currentMovies.map(movie => {
+              {currentMovies.map((movie) => {
                 return (
-                  <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12" key={movie._id}>
-                    {state.isActiveCheckbox && <input className="form-check-input" type="checkbox" value={movie._id} id={cx("input-custom")} />}
-                    <Movie slug={movie.slug} origin_name={movie.origin_name} poster_url={movie.poster_url} episode_current={movie.episode_current} episode={`tap-${1}`} year={movie.year} />
+                  <div
+                    className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12"
+                    key={movie._id}
+                  >
+                    {state.isActiveCheckbox && (
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={movie._id}
+                        id={cx("input-custom")}
+                      />
+                    )}
+                    <Movie
+                      slug={movie.slug}
+                      origin_name={movie.origin_name}
+                      poster_url={movie.poster_url}
+                      episode_current={movie.episode_current}
+                      episode={`tap-${1}`}
+                      year={movie.year}
+                    />
                   </div>
                 );
               })}

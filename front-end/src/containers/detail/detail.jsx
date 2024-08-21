@@ -1,3 +1,5 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { detailFilm } from "../../api/index";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -47,7 +49,7 @@ const Detail = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const episodeContainerRef = useRef(null);
   const options = {
-    withCredentials: true
+    withCredentials: true,
   };
   const userFromStorage = localStorage.getItem("user");
   const userObject = JSON.parse(userFromStorage);
@@ -70,7 +72,9 @@ const Detail = () => {
       if (voteQuantity !== 0) {
         totalScoreCalculator = Number.parseFloat(totalScore / voteQuantity);
       }
-      const currentIndexData = JSON.parse(localStorage.getItem("currentIndexData"));
+      const currentIndexData = JSON.parse(
+        localStorage.getItem("currentIndexData")
+      );
       if (currentIndexData && currentIndexData.key === slug) {
         setCurrentIndex(currentIndexData.currentIndex);
       } else {
@@ -92,7 +96,7 @@ const Detail = () => {
         userEmail: user,
         status: status,
         totalScore: totalScoreCalculator,
-        isMyList: myList
+        isMyList: myList,
       });
       setIsLoading(false);
     } catch (error) {
@@ -102,7 +106,9 @@ const Detail = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const currentIndexData = JSON.parse(localStorage.getItem("currentIndexData"));
+    const currentIndexData = JSON.parse(
+      localStorage.getItem("currentIndexData")
+    );
     if (currentIndexData && currentIndexData.key === slug) {
       setCurrentIndex(currentIndexData.currentIndex);
     } else {
@@ -113,13 +119,13 @@ const Detail = () => {
       );
     }
     fetchMovieData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   const handleEpisode = useCallback(
     async (episodeIndex, fileName, linkEmbed) => {
       let newIndex;
-      if(episodeIndex === "full") {
+      if (episodeIndex === "full") {
         newIndex = "full";
       } else {
         newIndex = episodeIndex + 1;
@@ -137,14 +143,18 @@ const Detail = () => {
           videoUrl: linkEmbed,
         }));
       }
-  
+
       try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/history/update`, {
-          movieId: movieData.movie._id,
-          episode: newIndex
-        }, options);
-        console.log(movieData.movie._id)
-  
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/history/update`,
+          {
+            movieId: movieData.movie._id,
+            episode: newIndex,
+          },
+          options
+        );
+        console.log(movieData.movie._id);
+
         if (response.status === 200) {
           console.log("History saved successfully.");
         }
@@ -155,36 +165,34 @@ const Detail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [navigate, movieData, slug]
   );
-  
 
   const handleConvert = (episode) => {
     let newEpisode = "";
-    if(episode.includes("Tập")) {
+    if (episode.includes("Tập")) {
       newEpisode = "Ep";
-      newEpisode += episode.substring(3, episode.length); 
-    } else if(episode.includes("Full")) {
+      newEpisode += episode.substring(3, episode.length);
+    } else if (episode.includes("Full")) {
       newEpisode = episode;
     }
     return newEpisode;
-  }
+  };
 
-  const episodeList = useMemo(() =>
+  const episodeList = useMemo(
+    () =>
       movieData.episodes.map((episode, index) => {
         const isActive = index === currentIndex - 1;
         return (
           <div
-            key={index} 
+            key={index}
             className={cx({
-                episode: true,
-                active: isActive,
+              episode: true,
+              active: isActive,
             })}
             onClick={() =>
               handleEpisode(index, episode.filename, episode.link_embed)
             }
           >
-            <p>
-              {handleConvert(episode.name)}
-            </p>
+            <p>{handleConvert(episode.name)}</p>
           </div>
         );
       }),
@@ -194,7 +202,10 @@ const Detail = () => {
   const handleScroll = (direction) => {
     if (episodeContainerRef.current) {
       const container = episodeContainerRef.current;
-      const scrollAmount = direction === "left" ? -container.clientWidth / 2 : container.clientWidth / 2;
+      const scrollAmount =
+        direction === "left"
+          ? -container.clientWidth / 2
+          : container.clientWidth / 2;
       container.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -205,7 +216,7 @@ const Detail = () => {
       const commentForm = {
         userEmail: email,
         movieSlug: slug,
-        text: movieData.commentValue
+        text: movieData.commentValue,
       };
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/movies/detail/${slug}/comment/create`,
@@ -222,7 +233,9 @@ const Detail = () => {
     event.preventDefault();
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/movies/detail/${slug}/comment/${commentId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/movies/detail/${slug}/comment/${commentId}`
       );
       if (response.status === 200) {
         await fetchMovieData();
@@ -238,21 +251,21 @@ const Detail = () => {
       const formData = {
         userEmail: email,
         movieSlug: slug,
-      }
+      };
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/movies/my-list/add/${slug}`,
-        formData, 
+        formData,
         options
       );
       if (response.status === 200) {
-        setMovieData(prev => ({...prev, isMyList: !prev.isMyList}));
+        setMovieData((prev) => ({ ...prev, isMyList: !prev.isMyList }));
         const notificationsResponse = await fetchAllNotifications(options);
         setNotifications(notificationsResponse.messages);
       }
     } catch (error) {
       console.error("Registration error:", error.response);
     }
-  }
+  };
 
   const handleRating = async (newStatus) => {
     try {
@@ -261,10 +274,10 @@ const Detail = () => {
         {
           userEmail: email,
           ratingValue: newStatus,
-        },
+        }
       );
       if (response.status === 200) {
-        setMovieData(prev => ({...prev, status: newStatus }));
+        setMovieData((prev) => ({ ...prev, status: newStatus }));
         await fetchMovieData();
         const notificationsResponse = await fetchAllNotifications(options);
         setNotifications(notificationsResponse.messages);
@@ -272,20 +285,23 @@ const Detail = () => {
     } catch (error) {
       console.error("Registration error:", error.response);
     }
-  }
+  };
 
   const handleReport = async (event) => {
     event.preventDefault();
     try {
       const movieId = document.querySelector("input[name='movieId']").value;
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin/report/send`, {
-        movieId: movieId,
-        fileName: movieData.fileName,
-        videoUrl: movieData.videoUrl
-      });
-      if(response.status === 200) {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/admin/report/send`,
+        {
+          movieId: movieId,
+          fileName: movieData.fileName,
+          videoUrl: movieData.videoUrl,
+        }
+      );
+      if (response.status === 200) {
         setIsReported(true);
-        toast.success(<strong className="fs-3">Response successful</strong> , {
+        toast.success(<strong className="fs-3">Response successful</strong>, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -305,11 +321,13 @@ const Detail = () => {
   const replace = (mySlug) => {
     let myString = "";
     const genreObject = genreObjects.find((genre) => genre.key === mySlug);
-    const countryObject = countryObjects.find((country) => country.key === mySlug);
-    if(genreObject) {
+    const countryObject = countryObjects.find(
+      (country) => country.key === mySlug
+    );
+    if (genreObject) {
       myString = genreObject.value;
     }
-    if(countryObject) {
+    if (countryObject) {
       myString = countryObject.value;
     }
     return myString;
@@ -327,7 +345,7 @@ const Detail = () => {
     handleRating("disliked");
   };
 
-  if(isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -355,21 +373,27 @@ const Detail = () => {
                 {movieData.movie.episode_total} <strong>Episodes</strong>
               </p>
               <span>|</span>
-              <strong className={cx("views")}><RemoveRedEyeIcon className={cx("view-icon")} /> {movieData.views}</strong>
+              <strong className={cx("views")}>
+                <RemoveRedEyeIcon className={cx("view-icon")} />{" "}
+                {movieData.views}
+              </strong>
               <form className={cx("form-add-list")} onSubmit={handleAddMyList}>
                 <input type="hidden" name="movieSlug" value={slug} />
                 <button type="submit">
-                  <LibraryAddIcon className={ movieData.isMyList ? cx("add-icon-active") : cx("add-icon") } />
+                  <LibraryAddIcon
+                    className={
+                      movieData.isMyList
+                        ? cx("add-icon-active")
+                        : cx("add-icon")
+                    }
+                  />
                 </button>
               </form>
               <div className={cx("rating-box")}>
                 <strong>Do you like this video?</strong>
                 <div className="d-flex gap-4">
                   <input type="hidden" name="userEmail" value={email} />
-                  <button
-                    type="button"
-                    onClick={handleLiked}
-                  >
+                  <button type="button" onClick={handleLiked}>
                     <ThumbUpIcon
                       className={cx("rating-icon")}
                       style={
@@ -379,10 +403,7 @@ const Detail = () => {
                       }
                     />
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleDisliked}
-                  >
+                  <button type="button" onClick={handleDisliked}>
                     <ThumbDownIcon
                       className={cx("rating-icon")}
                       style={
@@ -397,7 +418,11 @@ const Detail = () => {
             </div>
             <div className={cx("total-score")}>
               <Star rating={movieData.totalScore} totalStars={totalStars} />
-              <strong>{ movieData.totalScore === 0 ? "(No reviews)" : `(${Math.round(movieData.totalScore * 100) / 100} score)`}</strong>
+              <strong>
+                {movieData.totalScore === 0
+                  ? "(No reviews)"
+                  : `(${Math.round(movieData.totalScore * 100) / 100} score)`}
+              </strong>
             </div>
             <div className={cx("categories")}>
               <span>Genre: </span>
@@ -410,7 +435,7 @@ const Detail = () => {
                 </Link>
               ))}
             </div>
-            <div className={cx("countries")} >
+            <div className={cx("countries")}>
               <span>Country: </span>
               {movieData.countries.map((item) => (
                 <Link
@@ -426,7 +451,9 @@ const Detail = () => {
               <ReportIcon className={cx("report-icon")} />
               <strong>If the movie is defective, please report it to us</strong>
               <input type="hidden" name="movieId" value={movieData.movie._id} />
-              <button type="submit" style={ isReported ? {backgroundColor: "var(--box-color)"} : {} }>Report</button>
+              <button type="submit" disabled={isReported}>
+                Report
+              </button>
             </form>
             <h4 className={cx("episodes-title")}>Episodes</h4>
             <div className={cx("episodes")}>
@@ -457,7 +484,11 @@ const Detail = () => {
               <h4>Comments</h4>
               <form className={cx("user")} onSubmit={handleSubmitComment}>
                 <div className={cx("comment")}>
-                  <img src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`} alt="Avatar" onError={handleImgError} />
+                  <img
+                    src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
+                    alt="Avatar"
+                    onError={handleImgError}
+                  />
                   <textarea
                     className={cx("text")}
                     value={movieData.commentValue}
@@ -480,19 +511,21 @@ const Detail = () => {
                 </div>
               </form>
               <div className={cx("list")}>
-                {movieData.comments.slice(0, displayedComments).map((comment) => {
-                  const date = new Date(comment.createdAt);
-                  const options = {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  };
-                  const formattedDate = date.toLocaleDateString(
-                    "en-US",
-                    options
-                  );
+                {movieData.comments
+                  .slice(0, displayedComments)
+                  .map((comment) => {
+                    const date = new Date(comment.createdAt);
+                    const options = {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    };
+                    const formattedDate = date.toLocaleDateString(
+                      "en-US",
+                      options
+                    );
                     return (
                       <form
                         key={comment.userId}
@@ -502,7 +535,14 @@ const Detail = () => {
                         }
                       >
                         <div className={cx("comment-item")}>
-                          <img src={`${import.meta.env.VITE_IMG_URL}${comment.avatarUrl}`} alt="Avatar" onError={handleImgError} />
+                          <LazyLoadImage
+                            src={`${import.meta.env.VITE_IMG_URL}${
+                              comment.avatarUrl
+                            }`}
+                            alt="Avatar"
+                            effect="blur"
+                            onError={handleImgError}
+                          />
                           <textarea
                             className={cx("text")}
                             value={comment.text}
@@ -510,7 +550,9 @@ const Detail = () => {
                             rows={7}
                           ></textarea>
                         </div>
-                        <span className={cx("comment-date")}>{formattedDate}</span>
+                        <span className={cx("comment-date")}>
+                          {formattedDate}
+                        </span>
                         {movieData.userEmail === email && (
                           <div className={cx("btn-group")}>
                             <button>Edit</button>
@@ -540,5 +582,4 @@ const Detail = () => {
     </div>
   );
 };
-
 export default Detail;

@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
 import Footer from "../components/footer/footer";
 
-// eslint-disable-next-line react/prop-types
 const LoginLayout = ({ children }) => {
     return (
         <>
@@ -10,6 +10,10 @@ const LoginLayout = ({ children }) => {
             <Footer />
         </>
     );
-}
+};
+
+LoginLayout.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default LoginLayout;

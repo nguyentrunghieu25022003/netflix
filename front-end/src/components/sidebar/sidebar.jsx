@@ -10,42 +10,42 @@ import SettingsIcon from "@mui/icons-material/Settings";
 const cx = classNames.bind(styles);
 
 const Sidebar = () => {
-    return (
-        <div className={cx("sidebar")}>
-            <ul>
-                <li className={cx("sidebar-item")}>
-                    <Link to="/admin/dashboard">
-                        <DashboardIcon className={cx("icon")} />
-                        Dashboard
-                    </Link>
-                </li>
-                <li className={cx("sidebar-item")}>
-                    <Link to="/admin/movies">
-                        <MovieIcon className={cx("icon")} />
-                        Movies
-                    </Link>
-                </li>
-                <li className={cx("sidebar-item")}>
-                    <Link to="/admin/authorization">
-                        <AssignmentIcon className={cx("icon")} />
-                        Authorization
-                    </Link>
-                </li>
-                <li className={cx("sidebar-item")}>
-                    <Link to="/admin/all-report">
-                        <ReportProblemIcon className={cx("icon")} />
-                        Reports
-                    </Link>
-                </li>
-                <li className={cx("sidebar-item")}>
-                    <Link to="/admin/setting">
-                        <SettingsIcon className={cx("icon")} />
-                        Setting
-                    </Link>
-                </li>
-            </ul>
-        </div>
-    );
-}
+  return (
+    <div className={cx("sidebar")}>
+      <ul>
+        <li className={cx("sidebar-item")}>
+          <Link to="/admin/dashboard">
+            <DashboardIcon className={cx("icon")} />
+            Dashboard
+          </Link>
+        </li>
+        <li className={cx("sidebar-item")}>
+          <Link to="/admin/movies">
+            <MovieIcon className={cx("icon")} />
+            Movies
+          </Link>
+        </li>
+        <li className={cx("sidebar-item")}>
+          <Link to="/admin/authorization">
+            <AssignmentIcon className={cx("icon")} />
+            Authorization
+          </Link>
+        </li>
+        <li className={cx("sidebar-item")}>
+          <Link to="/admin/all-report">
+            <ReportProblemIcon className={cx("icon")} />
+            Reports
+          </Link>
+        </li>
+        <li className={cx("sidebar-item")}>
+          <Link to="/admin/setting">
+            <SettingsIcon className={cx("icon")} />
+            Setting
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 export default Sidebar;

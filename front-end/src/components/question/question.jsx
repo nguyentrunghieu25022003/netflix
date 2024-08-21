@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./question.module.scss";
@@ -6,7 +7,6 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const Question = ({ title, desc }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -30,6 +30,11 @@ const Question = ({ title, desc }) => {
       )}
     </>
   );
+};
+
+Question.propTypes = {
+  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired
 };
 
 export default Question;

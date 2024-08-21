@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
 
 
-// eslint-disable-next-line react/prop-types
 const ChartComponent = ({ totalUsers, totalMovies, totalComments, totalViews }) => {
   const data = {
     labels: ["Total Users", "Total Movies", "Total Comments", "Total Views"],
@@ -36,6 +36,13 @@ const ChartComponent = ({ totalUsers, totalMovies, totalComments, totalViews }) 
   };
 
   return <Bar data={data} options={options} />;
+};
+
+ChartComponent.propTypes = {
+  totalUsers: PropTypes.number.isRequired,
+  totalMovies: PropTypes.number.isRequired,
+  totalComments: PropTypes.number.isRequired,
+  totalViews: PropTypes.number.isRequired
 };
 
 export default ChartComponent;

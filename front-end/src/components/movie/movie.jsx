@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import styles from "./movie.module.scss";
 import { Link } from "react-router-dom";
@@ -7,7 +8,6 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current = '', episode = '', year = '', view = '' }) => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -45,5 +45,16 @@ const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current =
     </div>
   )
 };
+
+Movie.propTypes = {
+  slug: PropTypes.string.isRequired,
+  poster_url: PropTypes.string.isRequired,
+  origin_name: PropTypes.string.isRequired,
+  episode_current: PropTypes.string.isRequired,
+  episode: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  view: PropTypes.number.isRequired
+};
+
 
 export default Movie;

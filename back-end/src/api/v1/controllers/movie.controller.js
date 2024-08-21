@@ -88,10 +88,7 @@ module.exports.searchFilms = async (req, res) => {
       countSearchMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countSearchMovies,
@@ -131,10 +128,7 @@ module.exports.getAllMovies = async (req, res) => {
       countMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -174,10 +168,7 @@ module.exports.getAllSeries = async (req, res) => {
       countMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -217,10 +208,7 @@ module.exports.getAllFeatureFilms = async (req, res) => {
       countMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -260,10 +248,7 @@ module.exports.getAllTVShows = async (req, res) => {
       countMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,
@@ -303,10 +288,7 @@ module.exports.getAllAnimatedMovies = async (req, res) => {
       countMovies
     );
     const sort = sortHelper(req.query);
-    const movies = await MainModel.find(find)
-      .sort(sort)
-      .skip(objectPagination.skip)
-      .limit(objectPagination.limitItems);
+    const movies = await MainModel.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
     res.json({
       movies: movies,
       totalMovies: countMovies,

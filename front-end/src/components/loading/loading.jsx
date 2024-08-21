@@ -9,6 +9,6 @@ const Loading = () => {
         <img src={"/assets/imgs/Spin@1x-1.0s-200px-200px.gif"} alt="Loading" />
     </div>
    ); 
-}
+};
 
 export default Loading;

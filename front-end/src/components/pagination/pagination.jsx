@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
+import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import styles from "./pagination.module.scss";
 import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
-// eslint-disable-next-line react/prop-types
 const Pagination = ({ pages, currentPage, paginate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pageNumbers = [];
@@ -67,6 +66,12 @@ const Pagination = ({ pages, currentPage, paginate }) => {
       </ul>
     </nav>
   );
+};
+
+Pagination.propTypes = {
+  pages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  paginate: PropTypes.func.isRequired
 };
 
 export default Pagination;

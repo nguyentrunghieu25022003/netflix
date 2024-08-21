@@ -12,7 +12,7 @@ import Animated from "../containers/animated/animated";
 import SearchResult from "../containers/search/search";
 import MyList from "../containers/my-list/my-list";
 import Profile from "../containers/profile/profile";
-import Support from "../containers/support/support";
+import NotFound from "../containers/not-found/not-found";
 import Contact from "../containers/contact/contact";
 import ForgotPassword from "../containers/forgot-password/forgot-password";
 import ConfirmPassword from "../containers/confirm/confirm";
@@ -48,7 +48,7 @@ const privateRoutes = [
   { path: "/search-film", component: SearchResult, layout: MoviesLayout },
   { path: "/my-list", component: MyList, layout: MoviesLayout },
   { path: "/profile", component: Profile, layout: MoviesLayout },
-  { path: "/support", component: Support, layout: MoviesLayout },
+  { path: "/support", component: NotFound, layout: MoviesLayout },
   { path: "/contact", component: Contact, layout: MoviesLayout },
   { path: "/history", component: UserHistory, layout: MoviesLayout }
 ];
