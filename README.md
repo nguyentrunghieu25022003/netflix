@@ -54,14 +54,21 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/your-repository/netflix-clone.git
+```
+
+### Running the project:
+```bash
 cd netflix-clone
+npm install
+npm start
+```
 
 ## API Documentation
 
 This section provides detailed information about the endpoints available in the Netflix Clone API. Each endpoint includes method types, paths, and a brief description of its functionality.
 
 ### Movies
-
+```bash
 - **GET /api/movies**: Retrieve all movies. Requires authentication.
 - **GET /api/movies/search-results**: Retrieve search results based on query parameters.
 - **GET /api/movies/search-films**: Search for films. Requires authentication.
@@ -73,27 +80,27 @@ This section provides detailed information about the endpoints available in the 
 - **GET /api/movies/tv-shows**: Retrieve all TV shows. Requires authentication.
 - **GET /api/movies/animated**: Retrieve all animated movies. Requires authentication.
 - **GET /api/movies/my-list**: Retrieve all movies in the user's list. Requires authentication.
-
+```
 ### My List
-
+```bash
 - **POST /api/movies/my-list/add/:slug**: Add a movie to the user's list by slug. Requires authentication.
 - **DELETE /api/movies/my-list/delete**: Remove a movie from the user's list. Requires authentication.
-
+```
 ### Movie Details
-
+```bash
 - **GET /api/movies/detail/:slug**: Retrieve detailed information about a movie, including comments. Requires authentication.
 - **POST /api/movies/detail/:slug/comment/create**: Create a comment on a movie.
 - **PATCH /api/movies/detail/:slug/status-video**: Update the status of a video, such as marking it as liked or disliked.
 - **DELETE /api/movies/detail/:slug/comment/:commentId**: Remove a comment from a movie.
-
+```
 ### Miscellaneous
-
+```bash
 - **GET /api/movies/ranking**: Retrieve ranking of movies.
 - **GET /api/movies/notifications**: Retrieve all notifications for the user. Requires authentication.
 - **POST /api/movies/notifications/read**: Mark notifications as read. Requires authentication.
-
+```
 ### Authentication and User Management
-
+```bash
 - **GET /api/users/auth/check-token**: Check if the user's token is still valid. Requires authentication.
 - **GET /api/users/auth/refresh-token**: Refresh the access token. Requires authentication.
 - **GET /api/users/auth/google**: Initiate authentication via Google.
@@ -110,9 +117,9 @@ This section provides detailed information about the endpoints available in the 
 - **PATCH /api/users/forgot-password/new-password**: Reset the password after confirming the code.
 - **GET /api/users/history**: Retrieve user's viewing history. Requires authentication.
 - **POST /api/users/history/update**: Update user's viewing history. Requires authentication.
-
+```
 ### Admin Management
-
+```bash
 - **GET /api/admin/dashboard**: Retrieve dashboard data including stats and overviews.
 - **POST /api/admin/create-movie**: Add a new movie to the database.
 - **DELETE /api/admin/delete/:movieId**: Remove a movie from the database using its ID.
@@ -123,3 +130,4 @@ This section provides detailed information about the endpoints available in the 
 - **PATCH /api/admin/users/unlock**: Unlock a user's account.
 - **POST /api/admin/report/send**: Receive and handle a new report from users.
 - **GET /api/admin/all-report**: Retrieve all reports submitted by users.
+```
