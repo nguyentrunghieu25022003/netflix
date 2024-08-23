@@ -1,20 +1,26 @@
-import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
 import styles from "./header.module.scss";
 import Button from "../button/button";
 import Languages from "../language/language";
-import { Link } from "react-router-dom";
-
-const cx = classNames.bind(styles);
 
 const Header = () => {
   const userFromStorage = localStorage.getItem("user");
+  const signInOutButton = userFromStorage ? (
+    <Button path="/auth/logout">
+      <span style={{ fontSize: "1.5rem" }}>Sign Out</span>
+    </Button>
+  ) : (
+    <Button path="/auth/login">
+      <span style={{ fontSize: "1.5rem" }}>Sign In</span>
+    </Button>
+  );
 
   return (
-    <header className={cx("header")}>
+    <header className={styles.header}>
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex justify-content-between align-items-center">
-            <Link to="/vn-en">
+            <Link to="/vn-en" className="d-flex align-items-center">
               <svg
                 viewBox="0 0 111 30"
                 version="1.1"
@@ -32,15 +38,7 @@ const Header = () => {
             </Link>
             <div className="d-flex justify-content-between align-items-center gap-5">
               <Languages />
-              {userFromStorage ? (
-                <Button path={"/auth/logout"}>
-                  <span style={{ fontSize: "1.5rem" }}>Sign Out</span>
-                </Button>
-              ) : (
-                <Button path={"/auth/login"}>
-                  <span style={{ fontSize: "1.5rem" }}>Sign In</span>
-                </Button>
-              )}
+              {signInOutButton}
             </div>
           </div>
         </div>

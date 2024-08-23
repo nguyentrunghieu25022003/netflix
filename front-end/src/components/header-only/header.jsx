@@ -202,7 +202,7 @@ const Header = () => {
     >
       <div className="container">
         <div className="row">
-          <div className="col-12 d-flex justify-content-between align-items-center">
+          <div className="col-xl-12 col-auto d-flex justify-content-between align-items-center">
             <div onClick={scrollToTop}>
               <Link to="/">
                 <svg
@@ -392,7 +392,7 @@ const Header = () => {
                                 alt={notification.slug}
                                 className={cx("img")}
                               />
-                              <div className={cx("notify-inf")} style={ notification.message.includes("Movie") ? { marginLeft: "10px" } : {} }>
+                              <div className={cx("notify-inf")} style={{ marginLeft: "10px" }} >
                                 <strong>{notification.message}</strong>
                                 <span>{formattedDate}</span>
                               </div>

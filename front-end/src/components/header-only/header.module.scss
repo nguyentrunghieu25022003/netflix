@@ -7,6 +7,7 @@ a {
     z-index: 9999;
     width: 100%;
     padding: 20px 0;
+    transition: background-color 0.3s;
 
     .header-list {
         display: flex;
@@ -166,9 +167,9 @@ a {
 }
 
 .notify-link {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     padding: 10px 0;
     text-decoration: none;
 
@@ -181,6 +182,8 @@ a {
         background-color: var(--box-color);
         cursor: pointer;
     }
+
+    
 }
 
 .notify-inf {
@@ -203,14 +206,16 @@ a {
 }
 
 .check-icon {
+    position: absolute;
+    right: 0;
     color: #00B400;
-    margin-left: 10px;
 }
 
 .circle {
+    position: absolute;
+    right: 0;
     width: 12px;
     height: 12px;
-    margin-left: 10px;
     background-color: var(--button-color);
     border-radius: 50%;
     outline: none;
@@ -252,7 +257,6 @@ a {
     .img-netflix {
         width: 50px;
         height: 60px;
-        margin-left: 6px;
     }
 
     .notify-inf-netflix {

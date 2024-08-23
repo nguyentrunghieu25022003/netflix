@@ -48,7 +48,7 @@ const MailBox = () => {
 
   useEffect(() => {
     if (checkMail) {
-      navigate('/auth/register');
+      navigate("/auth/register");
     }
   }, [checkMail, navigate]);
 
