@@ -1,4 +1,310 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 100;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Th.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Th.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 300;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Lt.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Lt.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 400;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 700;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Md.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Md.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 800;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Bd.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Bd.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Netflix Sans';
+	font-weight: 900;
+	font-display: optional;
+	src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Blk.woff2) format('woff2'), url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Blk.woff) format('woff')
+}
+
+.netflix-sans-font-loaded {
+	font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+}
+
+.netflix-sans-font-loaded.nkufi-font-loaded {
+	font-family: NKufi, 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+}
+
+.netflix-sans-font-loaded.graphik-font-loaded {
+	font-family: GraphikTH, 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+}
+
+.error-page {
+	font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	line-height: 1.2;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #fff;
+	background: rgba(0, 0, 0, .18);
+	bottom: 0;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-moz-box-orient: vertical;
+	-moz-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	left: 0;
+	margin-top: 68px;
+	overflow: hidden;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 1000
+}
+
+@-webkit-keyframes pulsateAnimation {
+	from {
+		background-color: #1a1a1a
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: #1a1a1a
+	}
+
+	to {
+		background-color: #1a1a1a
+	}
+}
+
+@-moz-keyframes pulsateAnimation {
+	from {
+		background-color: #1a1a1a
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: #1a1a1a
+	}
+
+	to {
+		background-color: #1a1a1a
+	}
+}
+
+@-o-keyframes pulsateAnimation {
+	from {
+		background-color: #1a1a1a
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: #1a1a1a
+	}
+
+	to {
+		background-color: #1a1a1a
+	}
+}
+
+@keyframes pulsateAnimation {
+	from {
+		background-color: #1a1a1a
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: #1a1a1a
+	}
+
+	to {
+		background-color: #1a1a1a
+	}
+}
+
+@-webkit-keyframes pulsateTransparentAnimation {
+	from {
+		background-color: transparent
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: transparent
+	}
+
+	to {
+		background-color: transparent
+	}
+}
+
+@-moz-keyframes pulsateTransparentAnimation {
+	from {
+		background-color: transparent
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: transparent
+	}
+
+	to {
+		background-color: transparent
+	}
+}
+
+@-o-keyframes pulsateTransparentAnimation {
+	from {
+		background-color: transparent
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: transparent
+	}
+
+	to {
+		background-color: transparent
+	}
+}
+
+@keyframes pulsateTransparentAnimation {
+	from {
+		background-color: transparent
+	}
+
+	25% {
+		background-color: #333
+	}
+
+	50% {
+		background-color: transparent
+	}
+
+	to {
+		background-color: transparent
+	}
+}
+
+.pulsate,
+.pulsate-transparent {
+	-webkit-animation-duration: 3.6s;
+	-moz-animation-duration: 3.6s;
+	-o-animation-duration: 3.6s;
+	animation-duration: 3.6s;
+	-webkit-animation-name: pulsateAnimation;
+	-moz-animation-name: pulsateAnimation;
+	-o-animation-name: pulsateAnimation;
+	animation-name: pulsateAnimation;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-iteration-count: infinite;
+	-o-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	-moz-animation-timing-function: ease-in-out;
+	-o-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out
+}
+
+.pulsate-transparent {
+	-webkit-animation-name: pulsateTransparentAnimation;
+	-moz-animation-name: pulsateTransparentAnimation;
+	-o-animation-name: pulsateTransparentAnimation;
+	animation-name: pulsateTransparentAnimation
+}
+
+.no-pulsate {
+	background-color: #333
+}
+
+.pulsateTransition-enter {
+	-webkit-transition-duration: .2s;
+	-moz-transition-duration: .2s;
+	-o-transition-duration: .2s;
+	transition-duration: .2s;
+	-webkit-transition-property: opacity;
+	-o-transition-property: opacity;
+	-moz-transition-property: opacity;
+	transition-property: opacity;
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	z-index: 10000;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0
+}
+
+.pulsateTransition-enter.pulsateTransition-enter-active {
+	opacity: 1
+}
+
+.pulsateTransition-leave {
+	-webkit-transition-duration: .5s;
+	-moz-transition-duration: .5s;
+	-o-transition-duration: .5s;
+	transition-duration: .5s;
+	-webkit-transition-property: opacity;
+	-o-transition-property: opacity;
+	-moz-transition-property: opacity;
+	transition-property: opacity;
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	opacity: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0
+}
+
+.pulsateTransition-leave.pulsateTransition-leave-active {
+	opacity: 0
+}
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -144,7 +450,7 @@ table {
 
 html {
 	font-size: 62.5%;
-	font-family: "Roboto", sans-serif;
+	font-family: "Netflix Sans", "Roboto", sans-serif;
 }
 
 :root {
@@ -153,95 +459,4 @@ html {
 	--text-color: #BBBCBA;
 	--box-color: #414141;
 	--black-color: #000000;
-}
-
-/* Mobile devices (phones, 0-600px) */
-@media only screen and (max-width: 600px) {
-	._sort_hrj4m_33 {
-		width: 100px;
-	}
-
-	._sort-options_hrj4m_53 {
-		width: 140px;
-	}
-
-	._btn-submit_hrj4m_9 {
-		min-width: 120px;
-		margin-right: 4px;
-	}
-
-	._movie-item_1l09h_10, ._movie-item_77idp_25, #_desc_1pn95_1 {
-		margin: 0 auto;
-	}
-
-	._btn-group_77idp_154 {
-		right: 70px;
-	}
-
-	._header-list_z9zvn_7 {
-		display: none !important;
-	}
-
-	._search_bjb14_1 h2, .search-notify {
-		text-align: center;
-	}
-
-	._account-setting_z9zvn_91 {
-		right: 0;
-	}
-
-	._notify-table_z9zvn_157 {
-		right: 90px;
-	}
-}
-
-/* Tablets (portrait, 600px-900px) */
-@media only screen and (min-width: 600px) and (max-width: 1000px) {
-	._sort_hrj4m_33 {
-		width: 120px;
-	}
-
-	._btn-submit_hrj4m_9 {
-		min-width: 140px;
-		margin-right: 4px;
-	}
-
-	._movie-item_1l09h_10, ._movie-item_77idp_25, #_desc_1pn95_1 {
-		margin: 0 auto;
-	}
-
-	._btn-group_77idp_154 {
-		right: 70px;
-	}
-
-	._header-list_z9zvn_7 {
-		display: none !important;
-	}
-
-	._search_bjb14_1 h2, .search-notify {
-		text-align: center;
-	}
-
-	._account-setting_z9zvn_91 {
-		right: 90px;
-	}
-
-	._notify-table_z9zvn_157 {
-		right: 180px;
-	}
-}
-
-/* Tablets (landscape, 900px-1200px) */
-@media only screen and (min-width: 1000px) and (max-width: 1200px) {
-	._btn-submit_hrj4m_9 {
-		margin-right: 28px;
-	}
-
-	._account-setting_z9zvn_91 {
-		right: 110px;
-	}
-
-	._notify-table_z9zvn_157 {
-		right: 200px;
-	}
 }
