@@ -108,7 +108,7 @@ const Profile = () => {
           >
             <div className={cx("profile-img")}>
               <LazyLoadImage
-                src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
+                src={`${import.meta.env.VITE_SERVER_URL}${avatarUrl}`}
                 alt="avatar"
                 effect="blur"
                 onError={handleImgError}

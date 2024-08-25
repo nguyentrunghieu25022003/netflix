@@ -32,8 +32,8 @@
     z-index: 2;
     position: absolute;
     left: 110px;
-    width: 60%;
-    top: 150px;
+    width: 50%;
+    top: 180px;
 
     h3 {
         font-size: 4.8rem;
@@ -60,7 +60,7 @@
         display: flex;
         align-items: center;
         gap: 15px;
-        margin-top: 20px;
+        margin-top: 30px;
 
         a {
             text-decoration: none;
@@ -215,11 +215,15 @@
     .desc-slider {
         left: 70px;
     }
+
+    .mute-wrapper {
+        display: none;
+    }
 }
 
 @media (max-width: 575.98px) {
     .slider {
-        min-height: 900px;
+        min-height: 750px;
     }
 
     .desc-slider {

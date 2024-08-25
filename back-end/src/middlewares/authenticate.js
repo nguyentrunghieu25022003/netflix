@@ -2,15 +2,8 @@ const jwt = require("jsonwebtoken");
 const Blacklisting = require("../models/blacklist.model");
 
 const authenticateToken = async (req, res, next) => {
-  const authHeader = req.headers["authorization"];
   const userToken = req.cookies.userToken;
-  const adminToken = req.cookies.adminToken;
-  let token;
-  if (authHeader && authHeader.startsWith("Bearer ")) {
-    token = authHeader.split(" ")[1];
-  } else {
-    token = userToken || adminToken;
-  }
+  let token = userToken;
   if (!token) {
     return res.status(401).send("Token not found in the authorization header");
   }

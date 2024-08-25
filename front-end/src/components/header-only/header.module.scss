@@ -11,6 +11,10 @@ a {
 
     #menu {
         display: none;
+
+        .icon {
+            color: var(--white-color);
+        }
     }
 
     .header-list {

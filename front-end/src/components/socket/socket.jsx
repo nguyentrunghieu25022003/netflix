@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { fetchAllNotifications } from "../../api/index";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+const SOCKET_URL = import.meta.env.VITE_SERVER_URL;
 const NotificationContext = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components

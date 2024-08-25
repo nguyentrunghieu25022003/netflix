@@ -492,7 +492,7 @@ const Detail = () => {
               <form className={cx("user")} onSubmit={handleSubmitComment}>
                 <div className={cx("comment")}>
                   <img
-                    src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
+                    src={`${import.meta.env.VITE_SERVER_URL}${avatarUrl}`}
                     alt="Avatar"
                     onError={handleImgError}
                   />
@@ -541,7 +541,7 @@ const Detail = () => {
                       >
                         <div className={cx("comment-item")}>
                           <LazyLoadImage
-                            src={ handleCheckImageUrl(comment.avatarUrl) ? comment.avatarUrl : `${import.meta.env.VITE_IMG_URL}${comment.avatarUrl}`}
+                            src={ handleCheckImageUrl(comment.avatarUrl) ? comment.avatarUrl : `${import.meta.env.VITE_SERVER_URL}${comment.avatarUrl}`}
                             alt="Avatar"
                             effect="blur"
                           />

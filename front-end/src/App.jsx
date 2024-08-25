@@ -1,19 +1,26 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import { publicRoutes, privateRoutes, adminPublicRoutes, adminPrivateRoutes } from "./routes/index";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import {
+  publicRoutes,
+  privateRoutes,
+  adminPrivateRoutes,
+} from "./routes/index";
 import DefaultLayout from "./layouts/default";
 import AdminLayout from "./layouts/admin-layout";
-import AdminLayoutNoLogin from "./layouts/admin-layout-no-login";
 import useAuthToken from "./utils/auth";
 import HandleReloading from "./utils/navigation";
 import LoadingPage from "./containers/loading/loading";
+import NotFound from "./containers/not-found/not-found";
 
 function App() {
   const { userToken, isLoading } = useAuthToken();
 
-  if(isLoading) {
-    return (
-      <LoadingPage />
-    );
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   return (
@@ -36,7 +43,9 @@ function App() {
                 element={
                   <Layout>
                     {userToken &&
-                    (route.path === "/vn-en" || route.path === "/auth/login" || route.path === "/auth/register") ? (
+                    (route.path === "/vn-en" ||
+                      route.path === "/auth/login" ||
+                      route.path === "/auth/register") ? (
                       <Navigate to="/" />
                     ) : (
                       <Page />
@@ -55,43 +64,14 @@ function App() {
             } else {
               Layout = DefaultLayout;
             }
-         
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    {userToken ? (
-                      <Page />
-                    ) : (
-                      <Navigate to="/vn-en" />
-                    )}
-                  </Layout>
-                }
-              />
-            );
-          })}
 
-          {adminPublicRoutes.map((route, index) => {
-            const Page = route.component;
-            let Layout;
-            if (route.layout) {
-              Layout = route.layout;
-            } else {
-              Layout = AdminLayoutNoLogin;
-            }
             return (
               <Route
                 key={index}
                 path={route.path}
                 element={
                   <Layout>
-                    {userToken && (route.path === "/admin/login") ? (
-                      <Navigate to="/admin/dashboard" />
-                    ) : (
-                      <Page />
-                    )}
+                    {userToken ? <Page /> : <Navigate to="/vn-en" />}
                   </Layout>
                 }
               />
@@ -111,13 +91,17 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  <Layout>
+                  <>
                     {userToken ? (
-                      <Page />
+                      <Layout>
+                        <Page />
+                      </Layout>
                     ) : (
-                      <Navigate to="/admin/login" />
+                      <div>
+                        <NotFound />
+                      </div>
                     )}
-                  </Layout>
+                  </>
                 }
               />
             );

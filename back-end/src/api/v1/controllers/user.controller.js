@@ -50,15 +50,13 @@ module.exports.googleCallback = (req, res, next) => {
         userId: user._id,
       });
       await newToken.save();
-      if (user.role === "user") {
-        res.cookie("userToken", token, {
-          httpOnly: true,
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
-          path: "/",
-        });
-      }
+      res.cookie("userToken", token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
+        path: "/",
+      });
       res.redirect(
         `${process.env.CLIENT_URL}/login-success/${encodeURIComponent(
           token
@@ -97,7 +95,7 @@ module.exports.editUserProfile = async (req, res) => {
     } else {
       res.status(400).json({ message: "No valid fields to update" });
     }
-  } catch (error) {
+  } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
 };
@@ -119,7 +117,7 @@ module.exports.userRegister = async (req, res) => {
     await newUser.save();
     const users = await User({});
     res.json(users);
-  } catch (error) {
+  } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
 };
@@ -145,29 +143,27 @@ module.exports.userLogin = async (req, res) => {
       userId: user._id,
     });
     await newToken.save();
-    res.cookie(user.role === "user" ? "userToken" : "adminToken", token, {
+    res.cookie("userToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
       path: "/",
     });
-    res.json({ message: "Success !", user: user.role === "admin" ? undefined : user });
-  } catch (error) {
+    res.json({ message: "Success !", user: user });
+  } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
 };
 
 module.exports.checkToken = async (req, res) => {
   try {
-    const userId = req.user.userId;
-    const user = await User.findById(userId);
-    let token = user.role === "user" ? req.cookies.userToken : req.cookies.adminToken;
+    const token = req.cookies.userToken;
     if (!token) {
       return res.status(401).json({ message: "Token is required" });
     }
     res.json({ message: "Success" });
-  } catch (error) {
+  } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
 };
@@ -180,26 +176,25 @@ module.exports.releaseAccessToken = async (req, res) => {
       return res.status(403).json({ message: "Refresh token not found!" });
     }
     const refreshToken = refreshTokenDoc.token;
-    const user = await User.findById(userId);
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET,
+      async (err, decoded) => {
         if (err) {
           return res.status(403).json({ message: "Invalid refresh token!" });
         }
         const newAccessToken = createAccessToken(decoded.userId);
-        const type = user.role === "user" ? "userToken" : "adminToken";
-        res.cookie(type, newAccessToken, 
-          {
-            httpOnly: true,
-            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "None",
-            path: "/",
-          }
-        );
+        res.cookie("userToken", newAccessToken, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "None",
+          path: "/",
+        });
         res.json({ message: "Access token refreshed" });
       }
     );
-  } catch (error) {
+  } catch (err) {
     res.status(500).send("Message: " + err.message);
   }
 };
@@ -207,8 +202,7 @@ module.exports.releaseAccessToken = async (req, res) => {
 module.exports.userLogout = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const user = await User.findById(userId);
-    let token = user.role === "user" ? req.cookies.userToken : req.cookies.adminToken;
+    let token = req.cookies.userToken;
     if (token) {
       const newBlacklist = await new Blacklisting({
         userId: userId,
@@ -217,8 +211,8 @@ module.exports.userLogout = async (req, res) => {
       });
       await newBlacklist.save();
       await Token.findOneAndDelete({ userId: userId });
+      res.clearCookie("userToken");
     }
-    res.clearCookie(user.role === "user" ? "userToken" : "adminToken");
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     res.status(500).send("Message: " + err.message);

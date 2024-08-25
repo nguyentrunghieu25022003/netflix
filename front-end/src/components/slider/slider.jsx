@@ -126,7 +126,7 @@ const ImageSlider = ({ images }) => {
                   <span>|</span>
                   <p>{currentImage.lang === "Thuyết Minh" ? "Explanatory" : currentImage.lang}</p>
                 </div>
-                <p>{currentImage.content}</p>
+                <p className="pt-3 pb-3">{currentImage.content}</p>
                 <div className={cx("btn-group")}>
                   <Link
                     className={cx("btn-play")}

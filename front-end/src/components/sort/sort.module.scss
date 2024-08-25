@@ -32,6 +32,7 @@
 .sort {
     width: 150px;
     position: relative;
+
     .sort-select {
         display: flex;
         align-items: center;
@@ -52,13 +53,14 @@
 .sort-options {
     position: absolute;
     z-index: 999;
-    width: 100%;
+    width: 150px;
     height: 250px;
     overflow-y: auto;
     background-color: #111319;
     border-radius: 4px;
     padding: 10px 0;
     margin-top: 5px;
+
     li {
         font-size: 1.5rem;
         font-weight: 400;
@@ -70,11 +72,9 @@
             background-color: #52525b;
         }
     }
-    scrollbar-width: thin;
-    scrollbar-color: #888 var(--black-color);
+    
 }
 
-/* WebKit Scrollbar */
 .sort-options::-webkit-scrollbar {
     width: 10px;
 }
@@ -94,7 +94,13 @@
 
 @media (min-width: 576px) and (max-width: 767.98px) {
     .sort {
-        width: 120px;
+        width: 80px;
+
+        .sort-select {
+            strong {
+                display: none;
+            }
+        }
     }
 }
 
@@ -105,5 +111,11 @@
 
     .sort {
         width: 70px;
+
+        .sort-select {
+            strong {
+                display: none;
+            }
+        }
     }
 }

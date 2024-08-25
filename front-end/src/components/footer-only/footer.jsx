@@ -80,12 +80,10 @@ const Footer = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <div className={cx("footer-desc")}>
               <p>
-                ©2024 Netflix. This website was created by Nguyen Trung Hieu, a
-                student majoring in Information Security at Ho Chi Minh City
-                University of Industry and Trade
+                ©2024 Netflix. This website was created by Nguyen Trung Hieu
               </p>
             </div>
           </div>

@@ -1,23 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-const userController = require("../controllers/user.controller");
 const controller = require("../controllers/admin.controller");
 const authenticateToken = require("../../../middlewares/authenticate");
+const checkRole = require("../../../middlewares/role");
 
-router.get("/users/auth/check-token", authenticateToken, userController.checkToken);
-router.get("/users/auth/refresh-token", authenticateToken, userController.releaseAccessToken);
-router.post("/users/auth/login", userController.userLogin);
-router.get("/users/auth/logout", authenticateToken, userController.userLogout);
-router.get("/admin/dashboard", controller.getDashboard);
-router.post("/admin/create-movie", controller.addMovie);
-router.delete("/admin/delete/:movieId", controller.deleteMovie);
-router.get("/admin/edit/:movieId", controller.editMoviePage);
-router.put("/admin/edit/:movieId/upload", controller.handleEditMovie);
-router.get("/admin/users", controller.getUsers);
-router.patch("/admin/users/lock", controller.lockUser);
-router.patch("/admin/users/unlock", controller.unlockUser);
-router.post("/admin/report/send", controller.receiveReport);
-router.get("/admin/all-report", controller.getAllReport);
+router.get("/dashboard", authenticateToken, checkRole, controller.getDashboard);
+router.post("/create-movie", authenticateToken, checkRole, controller.addMovie);
+router.delete("/delete/:movieId", authenticateToken, checkRole, controller.deleteMovie);
+router.get("/edit/:movieId", authenticateToken, checkRole, controller.editMoviePage);
+router.put("/edit/:movieId/upload", controller.handleEditMovie);
+router.get("/users", controller.getUsers);
+router.patch("/users/lock", controller.lockUser);
+router.patch("/users/unlock", authenticateToken, checkRole, controller.unlockUser);
+router.post("/report/send",authenticateToken, checkRole, controller.receiveReport);
+router.get("/all-report",authenticateToken, checkRole, controller.getAllReport);
 
 module.exports = router;

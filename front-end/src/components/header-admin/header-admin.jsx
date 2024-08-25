@@ -10,7 +10,7 @@ const Header = () => {
   const options = {
     withCredentials: true,
   };
-
+  
   const handleLogout = async (event) => {
     event.preventDefault();
     try {

@@ -104,8 +104,8 @@ const MyList = () => {
             <h2>My List</h2>
           </div>
         </div>
-        <div className="row mb-5" id={cx("btn-list")}>
-          <div className="col-xl-6" id={cx("custom")}>
+        <div className={cx("btn-list")}>
+          <div className={cx("custom")}>
             <button
               style={{ backgroundColor: "#111319" }}
               onClick={handleSelectAll}
@@ -131,7 +131,7 @@ const MyList = () => {
               </button>
             </form>
           </div>
-          <div className="col-xl-6" id={cx("btn-group")}>
+          <div className={cx("btn-group")}>
             <button
               className={cx("btn-click")}
               onClick={() => handlePageChange("prev")}
@@ -152,11 +152,11 @@ const MyList = () => {
               There are no movies in the list
             </strong>
           ) : (
-            <div className="row pt-3">
+            <div className="row pt-5">
               {currentMovies.map((movie) => {
                 return (
                   <div
-                    className="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-12"
+                    className="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-12"
                     key={movie._id}
                   >
                     {state.isActiveCheckbox && (

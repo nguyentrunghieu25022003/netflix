@@ -20,8 +20,6 @@ import ForgotPasswordLayout from "../layouts/password-layout";
 import LoginSuccess from "../containers/login-success/login-success";
 import UserHistory from "../containers/history/history";
 import AdminLayout from "../layouts/admin-layout";
-import AdminLayoutNoLogin from "../layouts/admin-layout-no-login";
-import AdminLogin from "../containers/admin-login/admin-login";
 import Dashboard from "../containers/dashboard/dashboard";
 import Movies from "../containers/movies/movies";
 import CreateMoviePage from "../containers/create-movie/create-movie";
@@ -53,10 +51,6 @@ const privateRoutes = [
   { path: "/history", component: UserHistory, layout: MoviesLayout }
 ];
 
-const adminPublicRoutes = [
-  { path: "/admin/login", component: AdminLogin, layout: AdminLayoutNoLogin }
-];
-
 const adminPrivateRoutes = [
   { path: "/admin/dashboard", component: Dashboard, layout: AdminLayout },
   { path: "/admin/movies", component: Movies, layout: AdminLayout },
@@ -66,4 +60,4 @@ const adminPrivateRoutes = [
   { path: "/admin/all-report", component: Reports, layout: AdminLayout }
 ];
 
-export { publicRoutes, privateRoutes, adminPublicRoutes, adminPrivateRoutes };
+export { publicRoutes, privateRoutes, adminPrivateRoutes };

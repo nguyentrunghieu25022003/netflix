@@ -222,7 +222,7 @@ const Header = () => {
                 </svg>
               </Link>
               <div className="btn-group" id={cx("menu")}>
-                <button type="button" className="btn dropdown-toggle fs-3 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" className="btn dropdown-toggle fs-3 d-flex align-items-center text-white" data-bs-toggle="dropdown" aria-expanded="false">
                   <MenuIcon className={cx("icon")} />
                 </button>
                 <ul className="dropdown-menu pt-5 pb-5" style={{ backgroundColor: "var(--black-color)" }}>
@@ -524,7 +524,7 @@ const Header = () => {
                 >
                   <div className={cx("user-account")}>
                     <LazyLoadImage
-                      src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
+                      src={`${import.meta.env.VITE_SERVER_URL}${avatarUrl}`}
                       className={cx("avatar")}
                       alt="avatar"
                       effect="blur"
