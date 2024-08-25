@@ -10,7 +10,7 @@ const LoginSuccess = () => {
     const handleLoginSuccess = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5173/login-success/${token}/${email}/${avatar}`
+          `${import.meta.env.VITE_LOCALHOST_URL}/login-success/${token}/${email}/${avatar}`
         );
         if (response.status === 200) {
           localStorage.setItem(

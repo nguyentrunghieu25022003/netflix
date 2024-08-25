@@ -8,7 +8,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const cx = classNames.bind(styles);
 
-const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current = '', episode = '', year = '', view = '' }) => {
+const Movie = ({ slug = "", poster_url = "", origin_name = "", episode_current = "", episode = "", year = 0, view = 0 }) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 600,
@@ -29,7 +29,7 @@ const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current =
       myString = episode_current;
     }
     return myString;
-  }
+  };
 
   return (
     <div className={cx("movie-item")} onClick={scrollToTop}>
@@ -43,7 +43,7 @@ const Movie = ({ slug = '', poster_url = '', origin_name = '', episode_current =
           <p className={cx("movie-status")}>{handleEpisode(episode_current)}</p>
         </Link>
     </div>
-  )
+  );
 };
 
 Movie.propTypes = {
@@ -55,6 +55,5 @@ Movie.propTypes = {
   year: PropTypes.number.isRequired,
   view: PropTypes.number.isRequired
 };
-
 
 export default Movie;

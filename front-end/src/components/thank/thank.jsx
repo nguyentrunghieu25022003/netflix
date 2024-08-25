@@ -16,7 +16,7 @@ const Thank = () => {
           <div className="col-xl-6 col-lg-6 col-md-12 col-12">
             <img src={"/assets/imgs/Netflix-PPT-Template.jpg"} alt="error" />
           </div>
-          <div className="col-xl-6" id={cx("desc")}>
+          <div className={cx("col-xl-6 desc")}>
             <p>
               We provide free and high quality movie watching services for you.
               We appreciate your ability to choose us and hope our services have

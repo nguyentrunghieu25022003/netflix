@@ -6,14 +6,21 @@ import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 const Button = ({ path, onClick, children }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const handleClick = () => {
     if (onClick) {
       onClick();
     }
     navigate(path);
   };
-  return <button className={cx("btn-modify")} onClick={handleClick}>{children}</button>;
+  return (
+    <button 
+      className={cx("btn-modify")} 
+      onClick={handleClick}
+    >
+      {children}
+    </button>
+  );
 };
 
 

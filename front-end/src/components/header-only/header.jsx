@@ -92,6 +92,7 @@ const Header = () => {
       );
       if (response.status === 200) {
         console.log("Logout successful!");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -113,9 +114,7 @@ const Header = () => {
         console.log("Handle successful!");
         setNotifications((prevNotifications) =>
           prevNotifications.map((notification) =>
-            notification.slug === notificationSlug
-              ? { ...notification, status: "read" }
-              : notification
+            notification.slug === notificationSlug ? { ...notification, status: "read" } : notification
           )
         );
       }
@@ -257,9 +256,7 @@ const Header = () => {
                 <Link
                   to="/series"
                   className={
-                    isActive("/series")
-                      ? cx("header-link", "active-link")
-                      : cx("header-link")
+                    isActive("/series") ? cx("header-link", "active-link") : cx("header-link")
                   }
                 >
                   Series
@@ -269,9 +266,7 @@ const Header = () => {
                 <Link
                   to="/feature-films"
                   className={
-                    isActive("/feature-films")
-                      ? cx("header-link", "active-link")
-                      : cx("header-link")
+                    isActive("/feature-films") ? cx("header-link", "active-link") : cx("header-link")
                   }
                 >
                   Features
@@ -281,9 +276,7 @@ const Header = () => {
                 <Link
                   to="/tv-shows"
                   className={
-                    isActive("/tv-shows")
-                      ? cx("header-link", "active-link")
-                      : cx("header-link")
+                    isActive("/tv-shows") ? cx("header-link", "active-link") : cx("header-link")
                   }
                 >
                   TV Shows
@@ -293,9 +286,7 @@ const Header = () => {
                 <Link
                   to="/animated"
                   className={
-                    isActive("/animated")
-                      ? cx("header-link", "active-link")
-                      : cx("header-link")
+                    isActive("/animated") ? cx("header-link", "active-link") : cx("header-link")
                   }
                 >
                   Animated
@@ -305,9 +296,7 @@ const Header = () => {
                 <Link
                   to="/my-list"
                   className={
-                    isActive("/my-list")
-                      ? cx("header-link", "active-link")
-                      : cx("header-link")
+                    isActive("/my-list") ? cx("header-link", "active-link") : cx("header-link")
                   }
                 >
                   My list
@@ -457,11 +446,7 @@ const Header = () => {
                                   className={cx("circle")}
                                 ></button>
                               ) : (
-                                <span>
-                                  <CheckCircleIcon
-                                    className={cx("check-icon")}
-                                  />
-                                </span>
+                                <CheckCircleIcon className={cx("check-icon")} />
                               )}
                             </form>
                           </div>

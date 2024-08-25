@@ -52,3 +52,6 @@ yarn.lock
 
 # Ignore local history of JetBrains IDEs
 .local_history/
+
+# Ignore vercel
+.vercel

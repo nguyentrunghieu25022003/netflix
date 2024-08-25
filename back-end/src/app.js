@@ -39,7 +39,6 @@ const sessionOptions = {
   },
 };
 database.connect();
-
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
@@ -52,13 +51,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.set("socketio", io);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-
 app.get("/", async (req, res) => {
   res.send("Server is listening...");
 });
-
 router(app);
-
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

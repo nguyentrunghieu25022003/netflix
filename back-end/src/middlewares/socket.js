@@ -1,5 +1,4 @@
 const socket = require("socket.io");
-const jwt = require("jsonwebtoken");
 
 const initSocket = (server) => {
   const io = socket(server, {

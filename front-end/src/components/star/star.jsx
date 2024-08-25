@@ -16,6 +16,7 @@ const StarRating = ({ rating, totalStars }) => {
       </div>
     );
   }
+
   const fullStars = Math.floor(rating);
   const halfStars = rating % 1 !== 0 ? 1 : 0;
   const emptyStars = totalStars - fullStars - halfStars;

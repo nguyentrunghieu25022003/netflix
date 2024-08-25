@@ -3,8 +3,6 @@ module.exports = (objectPagination, query, countMovies) => {
     objectPagination.currentPage = parseInt(query.page);
   }
   objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
-  objectPagination.totalPage = Math.ceil(
-    countMovies / objectPagination.limitItems
-  );
+  objectPagination.totalPage = Math.ceil(countMovies / objectPagination.limitItems);
   return objectPagination;
 };

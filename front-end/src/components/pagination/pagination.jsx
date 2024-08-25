@@ -1,22 +1,16 @@
 import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import styles from "./pagination.module.scss";
-import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
 const Pagination = ({ pages, currentPage, paginate }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const pageNumbers = [];
   const maxPageButtons = 5;
   const sideButtons = 2;
 
   const handlePageClick = (number) => {
-    setIsLoading(true);
     paginate(number);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
   };
   
   const renderPageNumbers = () => {
