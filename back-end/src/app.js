@@ -18,7 +18,17 @@ const router = require("./api/v1/routes/index.route");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: function (origin, callback) {
+    if (process.env.NODE_ENV === "production") {
+      if (origin === process.env.CLIENT_URL) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    } else {
+      callback(null, true);
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
