@@ -83,6 +83,14 @@ export const genreObjects = [
     key: "vo-thuat",
     value: "Fighting",
   },
+  {
+    key: "than-thoai",
+    value: "Mythology",
+  },
+  {
+    key: "kinh-dien",
+    value: "Classics",
+  },
 ];
 
 export const countryObjects = [
@@ -257,6 +265,16 @@ export const dataCategory = [
     key: "578f80eb493b08d175c7a0c29687cbdf",
     slug: "vo-thuat",
     name: "Võ Thuật",
+  },
+  {
+    key: "0fcf63d85bf8ff2319725225a72579d5",
+    slug: "than-thoai",
+    name: "Mythology",
+  },
+  {
+    key: "6ef24f2b0d88d6f32b79bbc9fe938b11",
+    slug: "kinh-dien",
+    name: "Classics",
   },
 ];
 

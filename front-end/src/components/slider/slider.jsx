@@ -68,14 +68,13 @@ const ImageSlider = ({ images }) => {
         userEmail: email,
         movieSlug: currentImage.slug
       }
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_URL}/movies/my-list/add/${slug}`,
         formData, 
         options
       );
       const notificationsResponse = await fetchAllNotifications(options);
       setNotifications(notificationsResponse.messages);
-      console.log(response);
     } catch (error) {
       console.error("Registration error:", error.response);
     }
@@ -106,6 +105,7 @@ const ImageSlider = ({ images }) => {
                   onReady={handleVideoReady}
                   onEnded={handleVideoEnded}
                   className={cx("react-layer")}
+                  
                 />
                 <div className={cx("video-hover-overlay")}></div>
               </div>

@@ -23,7 +23,9 @@
     border-radius: 50%;
     padding: 12px 10px 5px;
     background-color: var(--black-color);
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
 }
 
 .page-item.active .page-link {
@@ -62,4 +64,14 @@
     border-top-color: var(--spinner-color, #333);
     border-radius: 50%;
     animation: spinner 0.5s linear infinite;
+}
+
+@media (max-width: 575.98px) {
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        justify-content: center;
+        margin-top: 20px;
+    }
 }

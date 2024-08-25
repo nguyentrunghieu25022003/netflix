@@ -114,12 +114,12 @@ const Movies = ({ fetchAllMovies, title }) => {
     <div className={cx("movies")}>
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <h2>{title}</h2>
           </div>
         </div>
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <Sort
               fetchMovies={() => fetchAllMovies(currentPage, filters, options)}
               onSortChange={handleSortChange}

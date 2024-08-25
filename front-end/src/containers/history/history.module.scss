@@ -16,14 +16,17 @@ a {
     }
 }
 
-.movie-img {
-    img {
-        width: 100%;
-        height: 450px;
-        object-fit: cover;
-        margin: 0 auto;
-        border-radius: 8px;
-    }
+.movie-item {
+    max-width: 290px;
+    width: 100%;
+}
+
+.movie-img img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    margin: 0 auto;
+    border-radius: 8px;
 }
 
 .history-box {
@@ -31,6 +34,7 @@ a {
 }
 
 .movie-desc {
+    width: 100%;
     padding-top: 10px;
 
     h5 {
@@ -68,7 +72,7 @@ a {
             height: 30px;
             border-radius: 4px;
             color: var(--white-color);
-            background-color: #00BB4C;
+            background-color: #00bb4c;
         }
     }
 
@@ -101,4 +105,13 @@ a {
     font-weight: 500;
     line-height: 1.3;
     color: var(--text-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 767.98px) {
+    .movie-desc {
+        .btn-play {
+            max-width: 330px;
+        }
+    }
 }

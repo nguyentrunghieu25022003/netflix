@@ -15,7 +15,7 @@ export const MovieProvider = ({ children }) => {
     totalPagesSearch,
     setTotalPagesSearch,
   };
-  
+
   return (
     <MovieContext.Provider value={value}>{children}</MovieContext.Provider>
   );
@@ -24,7 +24,7 @@ export const MovieProvider = ({ children }) => {
 // eslint-disable-next-line react-refresh/only-export-components
 export const useMovies = () => {
   return useContext(MovieContext);
-}
+};
 
 MovieProvider.propTypes = {
   children: PropTypes.node.isRequired,

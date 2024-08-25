@@ -5,15 +5,15 @@ import KidContent from "./sections/kid-content";
 import Questions from "./sections/question";
 
 const Home = () => {
-    return (
-        <>
-            <MultiDevice />
-            <Download />
-            <MultiUse />
-            <KidContent />
-            <Questions />
-        </>
-    )
-}
+  return (
+    <>
+      <MultiDevice />
+      <Download />
+      <MultiUse />
+      <KidContent />
+      <Questions />
+    </>
+  );
+};
 
 export default Home;

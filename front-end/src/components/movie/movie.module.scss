@@ -12,7 +12,7 @@
     background-color: var(--black-color);
     width: 280px;
     border-radius: 4px;
-    margin: 0 auto 25px auto;
+    margin: 0 auto 50px auto;
 
     img {
         width: 100%;
@@ -50,7 +50,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         padding: 10px;
     }
@@ -66,7 +65,7 @@
         font-weight: 500;
         line-height: 1.4;
         color: var(--white-color);
-    
+
         .view-icon {
             font-size: 2rem;
         }

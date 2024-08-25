@@ -9,3 +9,27 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .btn-modify {
+        padding: 12px 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .btn-modify {
+        padding: 12px 20px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .btn-modify {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .btn-modify {
+        padding: 12px 10px;
+    }
+}

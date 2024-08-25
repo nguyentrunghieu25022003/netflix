@@ -170,7 +170,7 @@
         font-weight: 400;
         line-height: 1.7;
         color: var(--white-color);
-        background-color: #24252B;
+        background-color: #24252b;
         padding: 2px 0;
         border-radius: 4px;
 
@@ -212,7 +212,7 @@
     button {
         width: 100px;
         min-height: 36px;
-        background-color: #FFC30F;
+        background-color: #ffc30f;
         border: 1px solid var(--box-color);
         display: block;
         border-radius: 4px;
@@ -314,7 +314,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: #2A2B2B;
+    background-color: #2a2b2b;
     padding: 10px 20px;
     border-radius: 30px;
     margin-left: 15px;
@@ -391,5 +391,54 @@
         border-radius: 4px;
         outline: none;
         background-color: var(--button-color);
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .categories,
+    .countries {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .rating-box {
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .detail {
+
+        h3 {
+            font-size: 2.2rem;
+        }
+    
+        .detail-desc {
+            font-size: 1.5rem;
+        }
+    
+        .detail-more {
+            margin-top: 15px;
+    
+            span,
+            p {
+                display: none;
+            }
+        }
+    }
+
+    .categories,
+    .countries {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .rating-box {
+        display: none;
     }
 }

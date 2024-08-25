@@ -57,6 +57,13 @@ const Detail = () => {
   const avatarUrl = userObject.avatar;
   const totalStars = 10;
 
+  const handleCheckImageUrl = (avatarUrl) => {
+    if (avatarUrl.startsWith("https")) {
+      return true;
+    }
+    return false;
+  };
+
   const fetchMovieData = async () => {
     try {
       const response = await detailFilm(slug, options);
@@ -353,7 +360,7 @@ const Detail = () => {
     <div className={cx("detail")}>
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <h3>{movieData.fileName}</h3>
             <div className="video-player">
               {movieData.videoUrl && (
@@ -479,7 +486,7 @@ const Detail = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <div className={cx("comments")}>
               <h4>Comments</h4>
               <form className={cx("user")} onSubmit={handleSubmitComment}>
@@ -511,9 +518,7 @@ const Detail = () => {
                 </div>
               </form>
               <div className={cx("list")}>
-                {movieData.comments
-                  .slice(0, displayedComments)
-                  .map((comment) => {
+                {movieData.comments.slice(0, displayedComments).map((comment) => {
                     const date = new Date(comment.createdAt);
                     const options = {
                       year: "numeric",
@@ -536,12 +541,9 @@ const Detail = () => {
                       >
                         <div className={cx("comment-item")}>
                           <LazyLoadImage
-                            src={`${import.meta.env.VITE_IMG_URL}${
-                              comment.avatarUrl
-                            }`}
+                            src={ handleCheckImageUrl(comment.avatarUrl) ? comment.avatarUrl : `${import.meta.env.VITE_IMG_URL}${comment.avatarUrl}`}
                             alt="Avatar"
                             effect="blur"
-                            onError={handleImgError}
                           />
                           <textarea
                             className={cx("text")}

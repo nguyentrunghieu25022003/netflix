@@ -28,3 +28,19 @@
         color: var(--white-color);
     }
 }
+
+@media (max-width: 575.98px) {
+    .thank {
+        h4 {
+            font-size: 4rem;
+        }
+
+        #desc {
+            padding-top: 40px;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+    }
+}

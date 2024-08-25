@@ -9,6 +9,10 @@ a {
     padding: 20px 0;
     transition: background-color 0.3s;
 
+    #menu {
+        display: none;
+    }
+
     .header-list {
         display: flex;
         align-items: center;
@@ -28,7 +32,10 @@ a {
             font-weight: 500;
             line-height: 1.2;
             color: var(--white-color);
-            transition: text-decoration-color 0.3s ease, text-decoration-thickness 0.3s ease, text-underline-offset 0.3s ease;
+            transition:
+                text-decoration-color 0.3s ease,
+                text-decoration-thickness 0.3s ease,
+                text-underline-offset 0.3s ease;
 
             &:hover {
                 color: var(--text-color);
@@ -182,8 +189,6 @@ a {
         background-color: var(--box-color);
         cursor: pointer;
     }
-
-    
 }
 
 .notify-inf {
@@ -208,7 +213,7 @@ a {
 .check-icon {
     position: absolute;
     right: 0;
-    color: #00B400;
+    color: #00b400;
 }
 
 .circle {
@@ -353,4 +358,171 @@ a {
     background-color: #333;
     border-radius: 10px;
     border: 2px solid var(--black-color);
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .header {
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        padding: 20px 0;
+        transition: background-color 0.3s;
+
+        .header-list {
+            display: flex;
+            align-items: center;
+            margin: 0 auto 0 40px;
+
+            li {
+                padding: 0 25px;
+
+                &:first-child {
+                    padding: 0 25px 0 0;
+                }
+            }
+
+            .header-link {
+                text-decoration: none;
+                font-size: 1.6rem;
+                font-weight: 500;
+                line-height: 1.2;
+                color: var(--white-color);
+                transition:
+                    text-decoration-color 0.3s ease,
+                    text-decoration-thickness 0.3s ease,
+                    text-underline-offset 0.3s ease;
+
+                &:hover {
+                    color: var(--text-color);
+                }
+            }
+        }
+
+        .header-icon {
+            text-decoration: none;
+            font-size: 2.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            color: var(--white-color);
+        }
+
+        .account {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+
+            .avatar {
+                width: 35px;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .header {
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        padding: 20px 0;
+        transition: background-color 0.3s;
+
+        .logo {
+            display: none;
+        }
+
+        #menu {
+            display: block;
+
+            .icon {
+                font-size: 3.5rem;
+            }
+
+            .logo {
+                display: block;
+            }
+        }
+
+        .header-list {
+            display: none;
+        }
+
+        #header-responsive {
+            width: 100%;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .header {
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        padding: 20px 0;
+        transition: background-color 0.3s;
+
+        .logo {
+            display: none;
+        }
+
+        #menu {
+            display: block;
+
+            .icon {
+                font-size: 3.5rem;
+            }
+
+            .logo {
+                display: block;
+            }
+        }
+
+        .header-list {
+            display: none;
+        }
+
+        #header-responsive {
+            width: 100%;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .header {
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        padding: 20px 0;
+        transition: background-color 0.3s;
+
+        .logo {
+            display: none;
+        }
+
+        #menu {
+            display: block;
+
+            .icon {
+                font-size: 3.5rem;
+            }
+
+            .logo {
+                display: block;
+            }
+        }
+
+        .header-list {
+            display: none;
+        }
+
+        #header-responsive {
+            width: 100%;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+    }
 }

@@ -45,12 +45,12 @@ const questions = [
 ];
 
 const Questions = () => {
-  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
   return (
     <div className={cx("questions")}>
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <h2>Frequently Asked Questions</h2>
             <div className={cx("question-list")}>
               {questions.map((question, index) => {
@@ -63,14 +63,14 @@ const Questions = () => {
                 );
               })}
             </div>
-            {!token && (
-              <div className={cx("mail-box")}>
-                <p>
-                  Ready to watch? Enter your email or mobile number to create or
-                  restart your membership.
+            {!user && (
+              <>
+                <p style={{ padding: "15px 0 20px 0" }}>
+                  Ready to watch? Enter your email or mobile number to create
+                  orrestart your membership.
                 </p>
                 <MailBox />
-              </div>
+              </>
             )}
           </div>
         </div>

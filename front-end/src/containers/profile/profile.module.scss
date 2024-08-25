@@ -1,6 +1,6 @@
 .profile {
     background-color: var(--black-color);
-    min-height: 700px;
+    min-height: 800px;
 
     h2 {
         font-size: 3rem;
@@ -61,7 +61,7 @@
             padding-left: 15px;
         }
     }
-    
+
     .icon {
         font-size: 3rem;
         color: var(--white-color);
@@ -112,7 +112,7 @@
     left: 82%;
     width: 30%;
     height: 70%;
-    animation: fly 8s infinite;
+    animation: fly 6s infinite;
 }
 
 @keyframes fly {
@@ -120,15 +120,19 @@
         left: 100px;
         top: 5px;
     }
+
     25% {
         left: 150px;
     }
+
     50% {
         left: 30px;
     }
+
     75% {
         left: 25px;
     }
+
     100% {
         right: -100px;
         top: 105px;

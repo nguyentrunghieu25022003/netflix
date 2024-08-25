@@ -8,16 +8,16 @@ const MultiUse = () => {
     <div className={cx("multi-use")}>
       <div className="container">
         <div className="row">
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("multi-use-left")}>
               <h2>Watch everywhere</h2>
               <p className="pt-3">
-                Stream unlimited movies and TV shows on your phone, tablet,
-                laptop, and TV.
+                Stream unlimited movies and TV shows on your phone,
+                tablet,laptop, and TV.
               </p>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("multi-use-right")}>
               <img src={"/assets/imgs/device-pile-vn.png"} alt="Error" />
               <video autoPlay muted loop width={400}>

@@ -1,4 +1,4 @@
-# Netflix Clone (No Responsive)
+# Netflix Clone
 
 A Netflix clone built using Node.js for the backend and React.js for the frontend. This project aims to replicate the main functionalities of Netflix, including user authentication, movie browsing, and video streaming.
 

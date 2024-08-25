@@ -53,7 +53,7 @@ module.exports.googleCallback = (req, res, next) => {
       if (user.role === "user") {
         res.cookie("userToken", token, {
           httpOnly: true,
-          expires: new Date(Date.now() + 15 * 60 * 1000),
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           secure: process.env.NODE_ENV === "production",
           sameSite: "None",
           path: "/",
@@ -84,7 +84,6 @@ module.exports.editUserProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
     const { userName, userEmail } = req.body;
-
     const updateData = {};
     if (userName) {
       updateData.name = userName;
@@ -148,16 +147,12 @@ module.exports.userLogin = async (req, res) => {
     await newToken.save();
     res.cookie(user.role === "user" ? "userToken" : "adminToken", token, {
       httpOnly: true,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
       path: "/",
     });
-    if (user.role === "admin") {
-      res.json({ message: "Success !" });
-    } else {
-      res.json({ message: "Success !", user: user });
-    }
+    res.json({ message: "Success !", user: user.role === "admin" ? undefined : user });
   } catch (error) {
     res.status(500).send("Message: " + err.message);
   }
@@ -165,14 +160,9 @@ module.exports.userLogin = async (req, res) => {
 
 module.exports.checkToken = async (req, res) => {
   try {
-    let token;
     const userId = req.user.userId;
     const user = await User.findById(userId);
-    if (user.role === "user") {
-      token = req.cookies.userToken;
-    } else {
-      token = req.cookies.adminToken;
-    }
+    let token = user.role === "user" ? req.cookies.userToken : req.cookies.adminToken;
     if (!token) {
       return res.status(401).json({ message: "Token is required" });
     }
@@ -196,9 +186,11 @@ module.exports.releaseAccessToken = async (req, res) => {
           return res.status(403).json({ message: "Invalid refresh token!" });
         }
         const newAccessToken = createAccessToken(decoded.userId);
-        res.cookie(user.role === "user" ? "userToken" : "adminToken", newAccessToken, {
+        const type = user.role === "user" ? "userToken" : "adminToken";
+        res.cookie(type, newAccessToken, 
+          {
             httpOnly: true,
-            expires: new Date(Date.now() + 15 * 60 * 1000),
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
             secure: process.env.NODE_ENV === "production",
             sameSite: "None",
             path: "/",
@@ -214,14 +206,9 @@ module.exports.releaseAccessToken = async (req, res) => {
 
 module.exports.userLogout = async (req, res) => {
   try {
-    let token;
     const userId = req.user.userId;
     const user = await User.findById(userId);
-    if (user.role === "user") {
-      token = req.cookies.userToken;
-    } else {
-      token = req.cookies.adminToken;
-    }
+    let token = user.role === "user" ? req.cookies.userToken : req.cookies.adminToken;
     if (token) {
       const newBlacklist = await new Blacklisting({
         userId: userId,

@@ -96,12 +96,16 @@ const Profile = () => {
     <div className={cx("profile")}>
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12">
             <h2>My Profile</h2>
           </div>
         </div>
         <div className="row">
-          <div className={cx("col-4 profile-custom")}>
+          <div
+            className={cx(
+              "col-xl-4 col-lg-3 col-md-12 col-sm-12 profile-custom"
+            )}
+          >
             <div className={cx("profile-img")}>
               <LazyLoadImage
                 src={`${import.meta.env.VITE_IMG_URL}${avatarUrl}`}
@@ -149,7 +153,7 @@ const Profile = () => {
               </form>
             </div>
           </div>
-          <div className="col-8">
+          <div className="col-xl-8 col-lg-9 col-md-12 col-sm-12">
             <div className={cx("dragon-fly")}>
               <img src={"/assets/imgs/dragon.gif"} alt="dragon" />
             </div>

@@ -8,7 +8,7 @@ const Download = () => {
     <div className={cx("download")}>
       <div className="container">
         <div className="row">
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("download-left")}>
               <img src={"/assets/imgs/mobile-0819.jpg"} alt="Error" />
               <div className={cx("download-box")}>
@@ -25,7 +25,7 @@ const Download = () => {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("download-right")}>
               <h2>Download your shows to watch offline</h2>
               <p className="pt-3">

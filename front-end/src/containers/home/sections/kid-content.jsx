@@ -8,7 +8,7 @@ const KidContent = () => {
     <div className={cx("kid-content")}>
       <div className="container">
         <div className="row">
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("kid-content-left")}>
               <img
                 src={
@@ -18,7 +18,7 @@ const KidContent = () => {
               />
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-xl-6">
             <div className={cx("kid-content-right")}>
               <h2>Create profiles for kids</h2>
               <p className="pt-3">

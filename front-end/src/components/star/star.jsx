@@ -8,7 +8,10 @@ const StarRating = ({ rating, totalStars }) => {
     return (
       <div>
         {Array.from({ length: 10 }, (_, index) => (
-          <StarBorderIcon key={index} style={{ color: "gold", fontSize: "20px" }} />
+          <StarBorderIcon
+            key={index}
+            style={{ color: "gold", fontSize: "20px" }}
+          />
         ))}
       </div>
     );
@@ -19,19 +22,22 @@ const StarRating = ({ rating, totalStars }) => {
 
   return (
     <div>
-      {Array(fullStars).fill().map((_, index) => (
-          <StarIcon
-            key={index}
-            style={{ color: "gold", fontSize: "20px" }}
-          />
+      {Array(fullStars)
+        .fill()
+        .map((_, index) => (
+          <StarIcon key={index} style={{ color: "gold", fontSize: "20px" }} />
         ))}
-      {Array(halfStars).fill().map((_, index) => (
+      {Array(halfStars)
+        .fill()
+        .map((_, index) => (
           <StarHalfIcon
             key={index}
             style={{ color: "gold", fontSize: "20px" }}
           />
         ))}
-      {Array(emptyStars).fill().map((_, index) => (
+      {Array(emptyStars)
+        .fill()
+        .map((_, index) => (
           <StarBorderIcon
             key={index}
             style={{ color: "gold", fontSize: "20px" }}

@@ -58,56 +58,51 @@ const UserHistory = () => {
         {histories.length > 0 ? (
           <div className={cx("row")}>
             {histories.map((item, index) => (
-              <div key={index} className="col-3 mt-5 p-5">
-                <div className="row">
-                  <div className="col-12">
-                    <div className={cx("movie-img")}>
-                      <LazyLoadImage
-                        src={item.poster_url}
-                        effect="blur"
-                        alt={item.origin_name}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className={cx("movie-desc")}>
-                      <h5 className={cx("movie-title")}>
-                        {item.origin_name} {`(${item.year})`}
-                      </h5>
-                      <strong className="mt-3">
-                        Current Episode: <button>{item.episode}</button>
-                      </strong>
-                      <strong className="mt-2">
-                        Time: {handleEpisode(item.time)}
-                      </strong>
-                      <Link
-                        className={cx("btn-play")}
-                        to={`/movie/detail/${item.slug}/tap-${item.episode}`}
-                        onClick={() => {
-                          localStorage.setItem(
-                            "currentIndexData",
-                            JSON.stringify({
-                              key: item.slug,
-                              currentIndex: item.episode,
-                            })
-                          );
-                        }}
-                      >
-                        Play
-                      </Link>
-                    </div>
-                  </div>
+              <div
+                key={index}
+                className={cx("movie-item col-xl-3 col-lg-4 col-md-6 mt-5 p-5")}
+              >
+                <div className={cx("movie-img")}>
+                  <LazyLoadImage
+                    src={item.poster_url}
+                    effect="blur"
+                    alt={item.origin_name}
+                  />
+                </div>
+                <div className={cx("movie-desc")}>
+                  <h5 className={cx("movie-title")}>
+                    {item.origin_name} {`(${item.year})`}
+                  </h5>
+                  <strong className="mt-3">
+                    Current Episode: <button>{item.episode}</button>
+                  </strong>
+                  <strong className="mt-2">
+                    Time: {handleEpisode(item.time)}
+                  </strong>
+                  <Link
+                    className={cx("btn-play")}
+                    to={`/movie/detail/${item.slug}/tap-${item.episode}`}
+                    onClick={() => {
+                      localStorage.setItem(
+                        "currentIndexData",
+                        JSON.stringify({
+                          key: item.slug,
+                          currentIndex: item.episode,
+                        })
+                      );
+                    }}
+                  >
+                    Play
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="row">
-            <div className="col-12">
-              <strong className={cx("no-history")}>
-                You have not watched any movies yet.
-              </strong>
-            </div>
+          <div>
+            <strong className={cx("no-history")}>
+              You have not watched any movies yet.
+            </strong>
           </div>
         )}
       </div>

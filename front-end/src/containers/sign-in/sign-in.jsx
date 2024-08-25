@@ -33,7 +33,7 @@ const Login = () => {
       );
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        toast(<strong className="fs-3">Login successful!</strong>, {
+        toast.success(<strong className="fs-3">Login successful!</strong>, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

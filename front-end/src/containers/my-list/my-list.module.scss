@@ -104,3 +104,62 @@ input[type="checkbox"]:checked {
         justify-content: flex-end;
     }
 }
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #custom {
+        display: flex;
+        
+        button {
+            width: 150px;
+            min-height: 48px;
+            margin-right: 18px;
+            background-color: var(--button-color);
+            border: 1px solid var(--box-color);
+            border-radius: 4px;
+            outline: none;
+            font-size: 1.8rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--white-color);
+    
+            &:hover {
+                background-color: #c1111a8f;
+                color: var(--text-color);
+            }
+        }
+    
+        .btn-edit {
+            background-color: transparent;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .movies {
+        text-align: center;
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--white-color);
+            padding: 40px 0 40px 0;
+        }
+    }
+
+    #custom {
+        display: none;
+    }
+
+    #btn-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        #btn-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

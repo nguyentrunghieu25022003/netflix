@@ -8,7 +8,7 @@ const NotFound = () => {
     <div className={cx("not-found")}>
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
             <img
               src={"/assets/imgs/1_hFwwQAW45673VGKrMPE2qQ.png"}
               alt="Error"

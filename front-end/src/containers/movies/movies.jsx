@@ -56,7 +56,7 @@ const Movies = () => {
         setIsLoading(false);
         console.error("Error fetching movies:", error);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, currentPage, fetchAllMovies]);
 
   const paginate = (pageNumber) => {

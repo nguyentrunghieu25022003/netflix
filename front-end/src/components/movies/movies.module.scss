@@ -1,5 +1,5 @@
 .movies {
-    background-color:  var(--black-color);
+    background-color: var(--black-color);
     padding-bottom: 50px;
     margin-top: -5px;
 
@@ -14,7 +14,8 @@
 
 #movies-page {
     min-height: 400px;
-    
+    padding-top: 40px;
+
     .warning {
         display: block;
         text-align: center;
@@ -45,5 +46,22 @@
     &:hover {
         cursor: pointer;
         opacity: 0.8;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .movies {
+        background-color: var(--black-color);
+        padding-bottom: 50px;
+        margin-top: -5px;
+
+        h2 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--white-color);
+            padding: 40px 0 40px 20px;
+        }
     }
 }
