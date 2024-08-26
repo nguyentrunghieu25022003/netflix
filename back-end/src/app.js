@@ -19,9 +19,9 @@ const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
   origin: function (origin, callback) {
-    /* if (!origin || origin === "http://localhost:3000" || origin === "http://localhost:5173") {
+    if (!origin) {
       return callback(null, true);
-    } */
+    }
     if (process.env.NODE_ENV === "production") {
       if (origin === process.env.CLIENT_URL) {
         callback(null, true);
