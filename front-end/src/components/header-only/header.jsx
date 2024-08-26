@@ -91,8 +91,21 @@ const Header = () => {
         options
       );
       if (response.status === 200) {
-        console.log("Logout successful!");
-        window.location.reload();
+        toast.success(<strong className="fs-3">Logout successful!</strong>, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        localStorage.removeItem("user");
+        setTimeout(() => {
+          console.log("Logout successful!");
+          window.location.reload();
+        }, 3000);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -121,23 +134,6 @@ const Header = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const clearTokenCookie = () => {
-    toast.success(<strong className="fs-3">Logout successful!</strong>, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    setTimeout(() => {
-      localStorage.removeItem("user");
-      window.location.reload();
-    }, 2000);
   };
 
   const isActive = (path) => location.pathname.includes(path);
@@ -499,7 +495,7 @@ const Header = () => {
                         className={cx("form-logout")}
                         onSubmit={handleLogout}
                       >
-                        <button type="submit" onClick={clearTokenCookie}>
+                        <button type="submit">
                           <ExitToAppIcon className={cx("icon")} />
                           Log out
                         </button>

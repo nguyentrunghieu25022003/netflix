@@ -19,6 +19,9 @@ const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
   origin: function (origin, callback) {
+    /* if (!origin || origin === "http://localhost:3000" || origin === "http://localhost:5173") {
+      return callback(null, true);
+    } */
     if (process.env.NODE_ENV === "production") {
       if (origin === process.env.CLIENT_URL) {
         callback(null, true);
@@ -52,6 +55,7 @@ database.connect();
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -60,11 +64,8 @@ app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set("socketio", io);
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-app.get("/", async (req, res) => {
-  res.send("Server is listening...");
-});
 router(app);
+
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
