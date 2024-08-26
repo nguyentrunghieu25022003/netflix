@@ -15,23 +15,11 @@ const port = 3000;
 const server = http.createServer(app);
 const database = require("../config/connect");
 const router = require("./api/v1/routes/index.route");
+const corsHelper = require("./helper/cors");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin) {
-      return callback(null, true);
-    }
-    if (process.env.NODE_ENV === "production") {
-      if (origin === process.env.CLIENT_URL) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    } else {
-      callback(null, true);
-    }
-  },
+  origin: corsHelper,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
