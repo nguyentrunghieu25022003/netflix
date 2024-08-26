@@ -65,7 +65,7 @@ const Questions = () => {
             </div>
             {!user && (
               <>
-                <p style={{ padding: "15px 0 20px 0" }}>
+                <p style={{ padding: "25px 0 20px 0" }}>
                   Ready to watch? Enter your email or mobile number to create
                   orrestart your membership.
                 </p>
