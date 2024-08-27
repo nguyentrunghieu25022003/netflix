@@ -19,7 +19,7 @@ const corsHelper = require("./helper/cors");
 const initSocket = require("./middlewares/socket");
 const io = initSocket(server);
 const corsOptions = {
-  origin: corsHelper.corsOptions,
+  origin: corsHelper.options,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],

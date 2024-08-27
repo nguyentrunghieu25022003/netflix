@@ -4,7 +4,7 @@ const corsHelper = require("../helper/cors");
 const initSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: corsHelper.corsOptions,
+      origin: corsHelper.options,
       credentials: true,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       allowedHeaders: ["Authorization", "Content-Type"],
