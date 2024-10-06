@@ -328,9 +328,7 @@ const Detail = () => {
   const replace = (mySlug) => {
     let myString = "";
     const genreObject = genreObjects.find((genre) => genre.key === mySlug);
-    const countryObject = countryObjects.find(
-      (country) => country.key === mySlug
-    );
+    const countryObject = countryObjects.find((country) => country.key === mySlug);
     if (genreObject) {
       myString = genreObject.value;
     }

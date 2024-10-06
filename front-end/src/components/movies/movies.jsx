@@ -17,11 +17,12 @@ const Movies = ({ fetchAllMovies, title }) => {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
   const currentPage = parseInt(queryParams.page) || 1;
-  const category = queryParams.genre || "";
+  const category = queryParams.genre || ""; 
+  const country = queryParams.country || "";
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [checkMovies, setCheckMovies] = useState(false);
-  const [filters, setFilters] = useState({ category });
+  const [filters, setFilters] = useState({ category, country });
   const [isLoading, setIsLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const currentIndexData = JSON.parse(localStorage.getItem("currentIndexData"));
