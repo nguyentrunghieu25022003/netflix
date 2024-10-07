@@ -85,7 +85,7 @@ const Movies = () => {
     event.preventDefault();
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/delete/${movieId}`
+        `${import.meta.env.VITE_API_URL}/admin/delete/${movieId}`, options
       );
       if (response.status === 200) {
         console.log("Successfully deleted !");

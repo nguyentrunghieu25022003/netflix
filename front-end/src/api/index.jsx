@@ -316,7 +316,9 @@ export const getMyProfile = async (options) => {
 export const getDashboard = async () => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/admin/dashboard`
+      `${import.meta.env.VITE_API_URL}/admin/dashboard`, {
+        withCredentials: true
+      }
     );
     if (response.status === 200) {
       return response.data;
