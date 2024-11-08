@@ -58,7 +58,10 @@ module.exports.handleSearchResult = async (req, res) => {
     const find = {};
     let objectSearch = searchHelper(req.query);
     if (req.query.keyword) {
-      find["movie.name"] = objectSearch.regex;
+      find["$or"] = [
+        { "movie.name": objectSearch.regex },
+        { "movie.origin_name": objectSearch.regex }
+      ];
     }
     const results = await MainModel.find(find);
     res.json(results);
@@ -76,7 +79,10 @@ module.exports.searchFilms = async (req, res) => {
     };
     let objectSearch = searchHelper(req.query);
     if (req.query.keyword) {
-      find["movie.name"] = objectSearch.regex;
+      find["$or"] = [
+        { "movie.name": objectSearch.regex },
+        { "movie.origin_name": objectSearch.regex }
+      ];
     }
     const countSearchMovies = await MainModel.countDocuments(find);
     const totalPagesSearch = Math.ceil(

@@ -160,7 +160,6 @@ const Detail = () => {
           },
           options
         );
-        console.log(movieData.movie._id);
 
         if (response.status === 200) {
           console.log("History saved successfully.");
